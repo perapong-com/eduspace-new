@@ -1,5 +1,2 @@
 # PharmacyAcademyNew # PharmacyAcademyNew
-
-hello world
-
-
+test02_2
