@@ -255,20 +255,22 @@ const CheckoutArea = () => {
                                         border: paymentMethod === 'promptpay' ? '2px solid #014D40' : '1px solid #e0e0e0',
                                         borderRadius: '12px',
                                         cursor: 'pointer',
-                                        background: paymentMethod === 'promptpay' ? '#f8fffe' : '#fff'
+                                        background: paymentMethod === 'promptpay' ? '#f8fffe' : '#fff',
+                                        minHeight: '60px',
                                     }}
                                 >
                                     <div className="d-flex align-items-center gap-3">
                                         <div style={{
                                             width: '40px',
                                             height: '40px',
-                                            background: '#014D40',
+                                            background: paymentMethod === 'promptpay' ? '#014D40' : '#f0f0f0',
                                             borderRadius: '8px',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            justifyContent: 'center'
+                                            justifyContent: 'center',
+                                            transition: 'all 0.3s ease',
                                         }}>
-                                            <i className="fas fa-qrcode" style={{ color: '#fff' }}></i>
+                                            <i className="fas fa-qrcode" style={{ color: paymentMethod === 'promptpay' ? '#fff' : '#666' }}></i>
                                         </div>
                                         <div>
                                             <p style={{ margin: 0, fontWeight: '500', color: '#333' }}>QR PromptPay</p>
@@ -298,27 +300,29 @@ const CheckoutArea = () => {
                                         border: paymentMethod === 'card' ? '2px solid #014D40' : '1px solid #e0e0e0',
                                         borderRadius: '12px',
                                         cursor: 'pointer',
-                                        background: paymentMethod === 'card' ? '#f8fffe' : '#fff'
+                                        background: paymentMethod === 'card' ? '#f8fffe' : '#fff',
+                                        minHeight: '60px',
                                     }}
                                 >
                                     <div className="d-flex align-items-center gap-3">
                                         <div style={{
                                             width: '40px',
                                             height: '40px',
-                                            background: '#f0f0f0',
+                                            background: paymentMethod === 'card' ? '#014D40' : '#f0f0f0',
                                             borderRadius: '8px',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            justifyContent: 'center'
+                                            justifyContent: 'center',
+                                            transition: 'all 0.3s ease',
                                         }}>
-                                            <i className="fas fa-credit-card" style={{ color: '#666' }}></i>
+                                            <i className="fas fa-credit-card" style={{ color: paymentMethod === 'card' ? '#fff' : '#666' }}></i>
                                         </div>
                                         <div>
                                             <p style={{ margin: 0, fontWeight: '500', color: '#333' }}>Credit/Debit Card</p>
-                                            <div className="d-flex gap-1 mt-1">
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard" style={{ height: '16px' }} />
-                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" style={{ height: '16px' }} />
-                                            </div>
+                                            <small style={{ color: '#666', display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Mastercard-logo.svg/200px-Mastercard-logo.svg.png" alt="Mastercard" style={{ height: '14px', marginRight: '4px' }} />
+                                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/200px-Visa_Inc._logo.svg.png" alt="Visa" style={{ height: '14px' }} />
+                                            </small>
                                         </div>
                                     </div>
                                     <div style={{

@@ -93,11 +93,13 @@ const FooterTwo = () => {
                                         <h3>{t('หมวดหมู่คอร์ส', 'Course Categories')}</h3>
                                     </div>
                                     <ul className="list-area">
-                                        <li><Link href="/courses-grid">{t('เภสัชวิทยา', 'Pharmacology')}</Link></li>
-                                        <li><Link href="/courses-grid">{t('เภสัชกรรมคลินิก', 'Clinical Pharmacy')}</Link></li>
-                                        <li><Link href="/courses-grid">{t('การบริบาลเภสัชกรรม', 'Pharmaceutical Care')}</Link></li>
-                                        <li><Link href="/courses-grid">{t('เภสัชกรรมชุมชน', 'Community Pharmacy')}</Link></li>
-                                        <li><Link href="/courses-grid">{t('กฎหมายเภสัชกรรม', 'Pharmacy Law')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยเภสัชบำบัด', 'The College of Pharmcotherapy')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยการคุ้มครองผู้บริโภคด้านยาและสุขภาพ', 'The College of Pharmaceutical and Health Consumer Protection')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยเภสัชกรรมสมุนไพร', 'The College of Herbal Pharmacy')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยเภสัชกรรมอุตสาหการ', 'The College of Industrial Pharmacy')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยการบริหารเภสัชกิจ', 'The College of Community Pharmacy')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยเภสัชกรรมชุมชน', 'The College of Pharmacy Adimnistration')}</Link></li>
+                                        <li><Link href="/courses-grid">{t('วิทยาลัยเภสัชพันธุศาสตร์และเภสัชกรรมแม่นยำ', 'The College of Pharmacogenomics and Precision Medicine')}</Link></li>
                                     </ul>
                                 </div>
                             </div>

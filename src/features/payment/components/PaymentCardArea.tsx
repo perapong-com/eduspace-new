@@ -1,10 +1,12 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
 const PaymentCardArea = () => {
     const { language, t } = useLanguage();
+    const router = useRouter();
     const [cardData, setCardData] = useState({
         cardNumber: '',
         cardName: '',
@@ -12,17 +14,21 @@ const PaymentCardArea = () => {
         cvv: ''
     });
     const [isProcessing, setIsProcessing] = useState(false);
-    const [timeLeft, setTimeLeft] = useState(10 * 60); // 10 minutes in seconds
+    const [timeLeft, setTimeLeft] = useState(1 * 60); // 1 minutes in seconds
 
     useEffect(() => {
-        if (timeLeft <= 0) return;
+        if (timeLeft <= 0) {
+            // Redirect to payment fail page when timeout
+            router.push('/payment-fail?type=card');
+            return;
+        }
 
         const timer = setInterval(() => {
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [timeLeft, router]);
 
     const formatTime = (seconds: number) => {
         const hrs = Math.floor(seconds / 3600);
@@ -34,13 +40,16 @@ const PaymentCardArea = () => {
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         let value = e.target.value;
 
-        // Format card number with spaces
+        // Format card number with spaces (numbers only)
         if (e.target.name === 'cardNumber') {
-            value = value.replace(/\s/g, '').replace(/(\d{4})/g, '$1 ').trim();
+            // Remove all non-digit characters first
+            value = value.replace(/\D/g, '');
+            // Add spaces every 4 digits
+            value = value.replace(/(\d{4})/g, '$1 ').trim();
             if (value.length > 19) return;
         }
 
-        // Format expiry date
+        // Format expiry date (numbers only)
         if (e.target.name === 'expiry') {
             value = value.replace(/\D/g, '');
             if (value.length >= 2) {
@@ -49,8 +58,10 @@ const PaymentCardArea = () => {
             if (value.length > 5) return;
         }
 
-        // Limit CVV
+        // Limit CVV (numbers only)
         if (e.target.name === 'cvv') {
+            // Remove all non-digit characters
+            value = value.replace(/\D/g, '');
             if (value.length > 3) return;
         }
 

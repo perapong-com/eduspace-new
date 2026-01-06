@@ -2,18 +2,39 @@
 
 import Link from 'next/link';
 import React, { useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { useLanguage } from '@/context/LanguageContext';
 
 const PaymentFailArea = () => {
     const { t } = useLanguage();
+    const searchParams = useSearchParams();
+    const paymentType = searchParams.get('type') || 'card'; // card, qr, promptpay
     const [showDetails, setShowDetails] = useState(false);
 
-    // Error details for display
-    const errorInfo = {
-        code: 'ERR_CARD_DECLINED',
-        time: new Date().toLocaleString('th-TH'),
-        reference: 'PA-2024-001234'
+    // Error details based on payment type
+    const getErrorInfo = () => {
+        switch (paymentType) {
+            case 'qr':
+            case 'promptpay':
+                return {
+                    code: 'ERR_QR_TIMEOUT',
+                    title: t('QR Code หมดอายุ', 'QR Code Expired'),
+                    message: t('QR Code หมดเวลาชำระเงิน กรุณาสร้าง QR Code ใหม่', 'QR Code payment has expired. Please generate a new QR Code.'),
+                    time: new Date().toLocaleString('th-TH'),
+                    reference: 'PA-2024-QR-001234'
+                };
+            default:
+                return {
+                    code: 'ERR_CARD_DECLINED',
+                    title: t('บัตรถูกปฏิเสธ', 'Card Declined'),
+                    message: t('ธนาคารปฏิเสธการทำรายการ กรุณาตรวจสอบวงเงินหรือติดต่อธนาคารของท่าน', 'Your bank declined the transaction. Please check your available balance or contact your bank.'),
+                    time: new Date().toLocaleString('th-TH'),
+                    reference: 'PA-2024-001234'
+                };
+        }
     };
+
+    const errorInfo = getErrorInfo();
 
     return (
         <section className="payment-fail-section section-padding" style={{
@@ -96,11 +117,10 @@ const PaymentFailArea = () => {
                                         </div>
                                         <div>
                                             <h5 style={{ color: '#991b1b', marginBottom: '4px', fontSize: '16px', fontWeight: '600' }}>
-                                                {t('บัตรถูกปฏิเสธ', 'Card Declined')}
+                                                {errorInfo.title}
                                             </h5>
                                             <p style={{ color: '#b91c1c', margin: 0, fontSize: '14px', lineHeight: '1.5' }}>
-                                                {t('ธนาคารปฏิเสธการทำรายการ กรุณาตรวจสอบวงเงินหรือติดต่อธนาคารของท่าน',
-                                                    'Your bank declined the transaction. Please check your available balance or contact your bank.')}
+                                                {errorInfo.message}
                                             </p>
                                         </div>
                                     </div>
@@ -118,10 +138,20 @@ const PaymentFailArea = () => {
                                         {t('สาเหตุที่เป็นไปได้', 'Possible Reasons')}
                                     </h5>
                                     <ul style={{ margin: 0, paddingLeft: '20px', color: '#6b7280', fontSize: '14px', lineHeight: '2' }}>
-                                        <li>{t('วงเงินในบัตรไม่เพียงพอ', 'Insufficient credit limit')}</li>
-                                        <li>{t('ข้อมูลบัตรไม่ถูกต้อง', 'Incorrect card details')}</li>
-                                        <li>{t('บัตรหมดอายุ', 'Expired card')}</li>
-                                        <li>{t('ธนาคารบล็อกธุรกรรมออนไลน์', 'Online transactions blocked by bank')}</li>
+                                        {paymentType === 'card' ? (
+                                            <>
+                                                <li>{t('วงเงินในบัตรไม่เพียงพอ', 'Insufficient credit limit')}</li>
+                                                <li>{t('ข้อมูลบัตรไม่ถูกต้อง', 'Incorrect card details')}</li>
+                                                <li>{t('บัตรหมดอายุ', 'Expired card')}</li>
+                                                <li>{t('ธนาคารบล็อกธุรกรรมออนไลน์', 'Online transactions blocked by bank')}</li>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <li>{t('QR Code หมดเวลา', 'QR Code has expired')}</li>
+                                                <li>{t('ไม่ได้สแกนภายในเวลาที่กำหนด', 'Did not scan within the time limit')}</li>
+                                                <li>{t('การเชื่อมต่อมีปัญหา', 'Connection issues')}</li>
+                                            </>
+                                        )}
                                     </ul>
                                 </div>
 
@@ -200,26 +230,50 @@ const PaymentFailArea = () => {
                                         {t('ลองชำระเงินใหม่', 'Try Payment Again')}
                                     </Link>
 
-                                    <Link
-                                        href="/payment-qr"
-                                        style={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '10px',
-                                            padding: '16px',
-                                            borderRadius: '14px',
-                                            fontSize: '16px',
-                                            fontWeight: '600',
-                                            background: '#fff',
-                                            color: '#004736',
-                                            textDecoration: 'none',
-                                            border: '2px solid #004736'
-                                        }}
-                                    >
-                                        <i className="fas fa-qrcode"></i>
-                                        {t('ชำระผ่าน PromptPay แทน', 'Pay via PromptPay Instead')}
-                                    </Link>
+                                    {/* Alternative payment option based on type */}
+                                    {paymentType === 'card' ? (
+                                        <Link
+                                            href="/payment-qr"
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '10px',
+                                                padding: '16px',
+                                                borderRadius: '14px',
+                                                fontSize: '16px',
+                                                fontWeight: '600',
+                                                background: '#fff',
+                                                color: '#004736',
+                                                textDecoration: 'none',
+                                                border: '2px solid #004736'
+                                            }}
+                                        >
+                                            <i className="fas fa-qrcode"></i>
+                                            {t('ชำระผ่าน QR Code แทน', 'Pay via QR Code Instead')}
+                                        </Link>
+                                    ) : (
+                                        <Link
+                                            href="/payment-card"
+                                            style={{
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                gap: '10px',
+                                                padding: '16px',
+                                                borderRadius: '14px',
+                                                fontSize: '16px',
+                                                fontWeight: '600',
+                                                background: '#fff',
+                                                color: '#004736',
+                                                textDecoration: 'none',
+                                                border: '2px solid #004736'
+                                            }}
+                                        >
+                                            <i className="fas fa-credit-card"></i>
+                                            {t('ชำระผ่านบัตรเครดิต/เดบิตแทน', 'Pay via Credit/Debit Card Instead')}
+                                        </Link>
+                                    )}
                                 </div>
 
                                 {/* Back Link */}
@@ -247,72 +301,7 @@ const PaymentFailArea = () => {
                             </div>
                         </div>
 
-                        {/* Support Section */}
-                        <div style={{
-                            textAlign: 'center',
-                            marginTop: '24px',
-                            padding: '24px',
-                            background: '#fff',
-                            borderRadius: '16px',
-                            boxShadow: '0 4px 20px rgba(0,0,0,0.05)'
-                        }}>
-                            <div style={{
-                                width: '48px',
-                                height: '48px',
-                                background: '#f0fdf4',
-                                borderRadius: '12px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                margin: '0 auto 12px'
-                            }}>
-                                <i className="fas fa-headset" style={{ color: '#004736', fontSize: '20px' }}></i>
-                            </div>
-                            <h5 style={{ color: '#374151', marginBottom: '8px', fontSize: '16px' }}>
-                                {t('ต้องการความช่วยเหลือ?', 'Need Help?')}
-                            </h5>
-                            <p style={{ color: '#6b7280', fontSize: '14px', marginBottom: '16px' }}>
-                                {t('ทีมงานพร้อมช่วยเหลือคุณตลอด 24 ชั่วโมง', 'Our team is available 24/7 to assist you')}
-                            </p>
-                            <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap' }}>
-                                <a
-                                    href="tel:021234567"
-                                    style={{
-                                        color: '#004736',
-                                        fontWeight: '600',
-                                        fontSize: '14px',
-                                        textDecoration: 'none',
-                                        padding: '10px 16px',
-                                        background: '#f0fdf4',
-                                        borderRadius: '10px',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '8px'
-                                    }}
-                                >
-                                    <i className="fas fa-phone"></i>
-                                    02-123-4567
-                                </a>
-                                <a
-                                    href="mailto:support@pharmacy-academy.com"
-                                    style={{
-                                        color: '#004736',
-                                        fontWeight: '600',
-                                        fontSize: '14px',
-                                        textDecoration: 'none',
-                                        padding: '10px 16px',
-                                        background: '#f0fdf4',
-                                        borderRadius: '10px',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '8px'
-                                    }}
-                                >
-                                    <i className="fas fa-envelope"></i>
-                                    Email
-                                </a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>

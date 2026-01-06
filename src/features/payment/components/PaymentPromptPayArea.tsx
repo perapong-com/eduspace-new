@@ -1,23 +1,29 @@
 "use client"
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useState, useEffect } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 
 const PaymentPromptPayArea = () => {
     const { t } = useLanguage();
-    const [timeLeft, setTimeLeft] = useState(15 * 60); // 15 minutes in seconds
+    const router = useRouter();
+    const [timeLeft, setTimeLeft] = useState(1 * 60); // 1 minutes in seconds
     const orderTotal = 8990;
     const orderId = 'ORD-2025-8842';
 
     useEffect(() => {
-        if (timeLeft <= 0) return;
+        if (timeLeft <= 0) {
+            // Redirect to payment fail page when timeout
+            router.push('/payment-fail?type=promptpay');
+            return;
+        }
 
         const timer = setInterval(() => {
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [timeLeft, router]);
 
     const formatTime = (seconds: number) => {
         const hrs = Math.floor(seconds / 3600);

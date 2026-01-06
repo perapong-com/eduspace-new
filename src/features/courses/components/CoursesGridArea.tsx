@@ -90,14 +90,14 @@ const COURSES_DATA = [
 ];
 
 const CATEGORIES = [
-    'ทั้งหมด',
-    'วิทยาลัยเภสัชบำบัด ',
-    'วิทยาลัยการคุ้มครองผู้บริโภคด้านยา',
-    'วิทยาลัยแพทย์รวมสมุนไพร ',
-    'วิทยาลัยเภสัชกรรมอุตสาหการ ',
-    'วิทยาลัยเภสัชกรรมชุมชน',
-    'วิทยาลัยการบริหารเภสัชกิจ ',
-    'วิทยาลัยเภสัชพันธุศาสตร์และเภสัชกรรมแม่และเด็ก',
+    { id: 'all', label: 'ทั้งหมด', labelEn: 'All' },
+    { id: 'pharmacotherapy', label: 'วิทยาลัยเภสัชบำบัด', labelEn: 'College of Pharmacotherapy' },
+    { id: 'consumer-protection', label: 'วิทยาลัยการคุ้มครองผู้บริโภคด้านยาและสุขภาพ', labelEn: 'College of Consumer Health Protection' },
+    { id: 'herbal', label: 'วิทยาลัยเภสัชกรรมสมุนไพร', labelEn: 'College of Herbal Pharmacy' },
+    { id: 'industrial', label: 'วิทยาลัยเภสัชกรรมอุตสาหการ', labelEn: 'College of Industrial Pharmacy' },
+    { id: 'management', label: 'วิทยาลัยการบริหารเภสัชกิจ', labelEn: 'College of Pharmacy Management' },
+    { id: 'community', label: 'วิทยาลัยเภสัชกรรมชุมชน', labelEn: 'College of Community Pharmacy' },
+    { id: 'precision', label: 'วิทยาลัยเภสัชพันธุศาสตร์และเภสัชกรรมแม่นยำ', labelEn: 'College of Pharmacogenomics & Precision Pharmacy' },
 ];
 
 const PRICE_RANGES = [
@@ -156,7 +156,7 @@ const CoursesGridArea = () => {
     const { isAuthenticated } = useAuth();
     const { language, t } = useLanguage();
     const [searchQuery, setSearchQuery] = useState('');
-    const [selectedCategory, setSelectedCategory] = useState('ทั้งหมด');
+    const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedPriceRange, setSelectedPriceRange] = useState(0); // index of PRICE_RANGES
     const [activeTab, setActiveTab] = useState<'explore' | 'my'>('explore');
 
@@ -179,7 +179,7 @@ const CoursesGridArea = () => {
                 course.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 course.titleEn.toLowerCase().includes(searchQuery.toLowerCase()) ||
                 course.instructor.toLowerCase().includes(searchQuery.toLowerCase());
-            const matchesCategory = selectedCategory === 'ทั้งหมด' || course.category === selectedCategory;
+            const matchesCategory = selectedCategory === 'all' || course.category === CATEGORIES.find(c => c.id === selectedCategory)?.label;
             const matchesPrice = course.price >= priceRange.min && course.price <= priceRange.max;
             return matchesSearch && matchesCategory && matchesPrice;
         });
@@ -187,7 +187,7 @@ const CoursesGridArea = () => {
 
     const clearFilters = () => {
         setSearchQuery('');
-        setSelectedCategory('ทั้งหมด');
+        setSelectedCategory('all');
         setSelectedPriceRange(0);
     };
 
@@ -297,17 +297,17 @@ const CoursesGridArea = () => {
                                             </div>
                                             <div className="courses-list" style={{ maxHeight: '300px', overflowY: 'auto' }}>
                                                 {CATEGORIES.map((cat) => (
-                                                    <label key={cat} className="checkbox-single">
+                                                    <label key={cat.id} className="checkbox-single">
                                                         <span className="d-flex gap-xl-3 gap-2 align-items-center">
                                                             <span className="checkbox-area d-center">
                                                                 <input
                                                                     type="checkbox"
-                                                                    checked={selectedCategory === cat}
-                                                                    onChange={() => setSelectedCategory(cat)}
+                                                                    checked={selectedCategory === cat.id}
+                                                                    onChange={() => setSelectedCategory(cat.id)}
                                                                 />
                                                                 <span className="checkmark d-center"></span>
                                                             </span>
-                                                            <span className="text-color">{cat}</span>
+                                                            <span className="text-color">{language === 'th' ? cat.label : cat.labelEn}</span>
                                                         </span>
                                                     </label>
                                                 ))}
@@ -342,10 +342,10 @@ const CoursesGridArea = () => {
                                     <div className="row">
                                         {filteredCourses.map((course) => (
                                             <div key={course.id} className="col-xl-4 col-lg-6 col-md-6">
-                                                <div className="courses-card-main-items">
-                                                    <div className="courses-card-items">
+                                                <div className="courses-card-main-items" style={{ maxHeight: '380px' }}>
+                                                    <div className="courses-card-items" style={{ marginTop: '15px' }}>
                                                         <div className="courses-image">
-                                                            <img src={course.image} alt={course.title} />
+                                                            <img src={course.image} alt={course.title} style={{ maxHeight: '140px', objectFit: 'cover' }} />
                                                             <h3 className="courses-title">{course.categoryEn}</h3>
                                                             <h4 className="topic-title">{course.cpe} CPE</h4>
                                                             <div className="arrow-items">
@@ -401,8 +401,14 @@ const CoursesGridArea = () => {
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <div className="courses-card-items-hover">
-                                                        <div className="courses-content">
+                                                    <div className="courses-card-items-hover" style={{
+                                                        marginTop: 0,
+                                                        padding: '18px 20px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center'
+                                                    }}>
+                                                        <div className="courses-content" style={{ width: '100%' }}>
                                                             <ul className="post-cat">
                                                                 <li>
                                                                     <Link href="/courses-grid">{course.category}</Link>
@@ -490,138 +496,182 @@ const CoursesGridArea = () => {
                                         </div>
                                     </div>
 
-                                    {/* Enrolled Courses Grid */}
-                                    <div className="row">
+                                    {/* Enrolled Courses List */}
+                                    <div className="enrolled-courses-list">
                                         {ENROLLED_COURSES.map((course) => (
-                                            <div key={course.id} className="col-xl-4 col-lg-6 mb-4">
-                                                <div style={{
+                                            <div
+                                                key={course.id}
+                                                style={{
                                                     background: '#fff',
                                                     borderRadius: '16px',
-                                                    overflow: 'hidden',
+                                                    padding: '20px',
+                                                    marginBottom: '16px',
                                                     boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
+                                                    display: 'flex',
+                                                    alignItems: 'center',
+                                                    gap: '24px',
                                                     transition: 'all 0.3s ease',
+                                                }}
+                                            >
+                                                {/* Course Image */}
+                                                <div style={{
+                                                    position: 'relative',
+                                                    flexShrink: 0,
+                                                    width: '200px',
+                                                    height: '130px',
+                                                    borderRadius: '12px',
+                                                    overflow: 'hidden',
                                                 }}>
-                                                    {/* Course Image */}
-                                                    <div style={{ position: 'relative' }}>
-                                                        <img
-                                                            src={course.image}
-                                                            alt={course.title}
-                                                            style={{ width: '100%', height: '160px', objectFit: 'cover' }}
-                                                        />
-                                                        {/* Status Badge */}
-                                                        <span style={{
-                                                            position: 'absolute',
-                                                            top: '12px',
-                                                            right: '12px',
-                                                            padding: '6px 12px',
-                                                            borderRadius: '20px',
-                                                            fontSize: '12px',
-                                                            fontWeight: '600',
-                                                            background: course.status === 'completed' ? '#22c55e' : '#f59e0b',
-                                                            color: '#fff',
-                                                        }}>
-                                                            {course.status === 'completed' ? t('✓ เรียนจบแล้ว', '✓ Completed') : t('📖 กำลังเรียน', '📖 In Progress')}
-                                                        </span>
-                                                    </div>
+                                                    <img
+                                                        src={course.image}
+                                                        alt={course.title}
+                                                        style={{
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            objectFit: 'cover'
+                                                        }}
+                                                    />
+                                                    {/* Status Badge */}
+                                                    <span style={{
+                                                        position: 'absolute',
+                                                        top: '8px',
+                                                        right: '8px',
+                                                        padding: '4px 10px',
+                                                        borderRadius: '16px',
+                                                        fontSize: '11px',
+                                                        fontWeight: '600',
+                                                        background: course.status === 'completed' ? '#22c55e' : '#f59e0b',
+                                                        color: '#fff',
+                                                    }}>
+                                                        {course.status === 'completed' ? t('✓ เรียนจบแล้ว', '✓ Completed') : t('📖 กำลังเรียน', '📖 In Progress')}
+                                                    </span>
+                                                </div>
 
-                                                    {/* Course Info */}
-                                                    <div style={{ padding: '20px' }}>
-                                                        <h5 style={{
-                                                            color: '#014D40',
-                                                            fontSize: '16px',
-                                                            fontWeight: '600',
-                                                            marginBottom: '8px',
-                                                            lineHeight: '1.4',
-                                                        }}>
-                                                            {course.title}
-                                                        </h5>
-                                                        <p style={{ color: '#666', fontSize: '13px', marginBottom: '12px' }}>
-                                                            <i className="fas fa-user-tie" style={{ marginRight: '6px' }}></i>
-                                                            {course.instructor}
-                                                        </p>
+                                                {/* Course Info */}
+                                                <div style={{ flex: 1, minWidth: 0 }}>
+                                                    <h5 style={{
+                                                        color: '#014D40',
+                                                        fontSize: '18px',
+                                                        fontWeight: '600',
+                                                        marginBottom: '8px',
+                                                        lineHeight: '1.4',
+                                                    }}>
+                                                        {course.title}
+                                                    </h5>
+                                                    <p style={{ color: '#666', fontSize: '14px', marginBottom: '12px' }}>
+                                                        <i className="fas fa-user-tie" style={{ marginRight: '6px' }}></i>
+                                                        {course.instructor}
+                                                    </p>
 
-                                                        {/* Progress Bar */}
-                                                        <div style={{ marginBottom: '12px' }}>
-                                                            <div style={{
-                                                                display: 'flex',
-                                                                justifyContent: 'space-between',
-                                                                marginBottom: '6px',
-                                                            }}>
-                                                                <span style={{ fontSize: '13px', color: '#666' }}>
-                                                                    {course.completedLessons}/{course.totalLessons} {t('บทเรียน', 'Lessons')}
-                                                                </span>
-                                                                <span style={{
-                                                                    fontSize: '13px',
-                                                                    fontWeight: '600',
-                                                                    color: course.progress === 100 ? '#22c55e' : '#014D40',
-                                                                }}>
-                                                                    {course.progress}%
-                                                                </span>
-                                                            </div>
-                                                            <div style={{
-                                                                height: '8px',
-                                                                background: '#e5e7eb',
-                                                                borderRadius: '4px',
-                                                                overflow: 'hidden',
-                                                            }}>
-                                                                <div style={{
-                                                                    width: `${course.progress}%`,
-                                                                    height: '100%',
-                                                                    background: course.progress === 100
-                                                                        ? 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)'
-                                                                        : 'linear-gradient(90deg, #014D40 0%, #40C7A9 100%)',
-                                                                    borderRadius: '4px',
-                                                                    transition: 'width 0.5s ease',
-                                                                }}></div>
-                                                            </div>
-                                                        </div>
-
-                                                        {/* Meta Info */}
+                                                    {/* Progress Bar */}
+                                                    <div style={{ marginBottom: '12px', maxWidth: '400px' }}>
                                                         <div style={{
                                                             display: 'flex',
-                                                            gap: '16px',
-                                                            marginBottom: '16px',
-                                                            paddingTop: '12px',
-                                                            borderTop: '1px solid #f0f0f0',
+                                                            justifyContent: 'space-between',
+                                                            marginBottom: '6px',
                                                         }}>
-                                                            <span style={{ fontSize: '12px', color: '#666' }}>
-                                                                <i className="fas fa-clock" style={{ marginRight: '4px', color: '#40C7A9' }}></i>
-                                                                {course.duration}
+                                                            <span style={{ fontSize: '13px', color: '#666' }}>
+                                                                {course.completedLessons}/{course.totalLessons} {t('บทเรียน', 'Lessons')}
                                                             </span>
-                                                            <span style={{ fontSize: '12px', color: '#666' }}>
-                                                                <i className="fas fa-certificate" style={{ marginRight: '4px', color: '#40C7A9' }}></i>
-                                                                {course.cpe} CPE
+                                                            <span style={{
+                                                                fontSize: '13px',
+                                                                fontWeight: '600',
+                                                                color: course.progress === 100 ? '#22c55e' : '#014D40',
+                                                            }}>
+                                                                {course.progress}%
                                                             </span>
                                                         </div>
+                                                        <div style={{
+                                                            height: '8px',
+                                                            background: '#e5e7eb',
+                                                            borderRadius: '4px',
+                                                            overflow: 'hidden',
+                                                        }}>
+                                                            <div style={{
+                                                                width: `${course.progress}%`,
+                                                                height: '100%',
+                                                                background: course.progress === 100
+                                                                    ? 'linear-gradient(90deg, #22c55e 0%, #4ade80 100%)'
+                                                                    : 'linear-gradient(90deg, #014D40 0%, #40C7A9 100%)',
+                                                                borderRadius: '4px',
+                                                                transition: 'width 0.5s ease',
+                                                            }}></div>
+                                                        </div>
+                                                    </div>
 
-                                                        {/* Continue Button */}
-                                                        <Link
-                                                            href={`/course-learning?id=${course.id}`}
+                                                    {/* Meta Info */}
+                                                    <div style={{
+                                                        display: 'flex',
+                                                        gap: '20px',
+                                                    }}>
+                                                        <span style={{ fontSize: '13px', color: '#666' }}>
+                                                            <i className="fas fa-clock" style={{ marginRight: '6px', color: '#40C7A9' }}></i>
+                                                            {course.duration}
+                                                        </span>
+                                                        <span style={{ fontSize: '13px', color: '#666' }}>
+                                                            <i className="fas fa-certificate" style={{ marginRight: '6px', color: '#40C7A9' }}></i>
+                                                            {course.cpe} CPE
+                                                        </span>
+                                                    </div>
+                                                </div>
+
+                                                {/* Buttons */}
+                                                <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                                    {/* Download CPE Button - Only for completed courses */}
+                                                    {course.status === 'completed' && (
+                                                        <button
+                                                            onClick={() => {
+                                                                // Simulate CPE certificate download
+                                                                alert(t('กำลังดาวน์โหลดใบรับรอง CPE...', 'Downloading CPE Certificate...'));
+                                                            }}
                                                             style={{
                                                                 display: 'flex',
                                                                 alignItems: 'center',
                                                                 justifyContent: 'center',
                                                                 gap: '8px',
-                                                                width: '100%',
-                                                                padding: '12px',
-                                                                background: course.status === 'completed'
-                                                                    ? 'linear-gradient(135deg, #22c55e 0%, #4ade80 100%)'
-                                                                    : 'linear-gradient(135deg, #014D40 0%, #006B5A 100%)',
+                                                                padding: '14px 28px',
+                                                                background: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 100%)',
                                                                 color: '#fff',
+                                                                border: 'none',
                                                                 borderRadius: '10px',
-                                                                textDecoration: 'none',
+                                                                cursor: 'pointer',
                                                                 fontWeight: '600',
                                                                 fontSize: '14px',
                                                                 transition: 'all 0.3s ease',
+                                                                whiteSpace: 'nowrap',
                                                             }}
                                                         >
-                                                            {course.status === 'completed' ? (
-                                                                <><i className="fas fa-redo"></i> {t('เรียนซ้ำ', 'Retake')}</>
-                                                            ) : (
-                                                                <><i className="fas fa-play"></i> {t('เรียนต่อ', 'Continue')}</>
-                                                            )}
-                                                        </Link>
-                                                    </div>
+                                                            <i className="fas fa-download"></i> {t('ดาวน์โหลด CPE', 'Download CPE')}
+                                                        </button>
+                                                    )}
+
+                                                    {/* Continue/Retake Button */}
+                                                    <Link
+                                                        href={`/course-learning?id=${course.id}`}
+                                                        style={{
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            gap: '8px',
+                                                            padding: '14px 28px',
+                                                            background: course.status === 'completed'
+                                                                ? 'linear-gradient(135deg, #22c55e 0%, #4ade80 100%)'
+                                                                : 'linear-gradient(135deg, #014D40 0%, #006B5A 100%)',
+                                                            color: '#fff',
+                                                            borderRadius: '10px',
+                                                            textDecoration: 'none',
+                                                            fontWeight: '600',
+                                                            fontSize: '14px',
+                                                            transition: 'all 0.3s ease',
+                                                            whiteSpace: 'nowrap',
+                                                        }}
+                                                    >
+                                                        {course.status === 'completed' ? (
+                                                            <><i className="fas fa-redo"></i> {t('เรียนซ้ำ', 'Retake')}</>
+                                                        ) : (
+                                                            <><i className="fas fa-play"></i> {t('เรียนต่อ', 'Continue')}</>
+                                                        )}
+                                                    </Link>
                                                 </div>
                                             </div>
                                         ))}

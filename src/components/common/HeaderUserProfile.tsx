@@ -28,7 +28,7 @@ const HeaderUserProfile = ({ compact = false }: HeaderUserProfileProps) => {
 
     if (!isAuthenticated || !user) {
         return (
-            <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div className="header-buttons" style={{ display: 'flex', alignItems: 'center', gap: '12px', flexShrink: 0 }}>
                 {/* Login Button - Outlined Style */}
                 <Link
                     href="/sign-in"
@@ -45,6 +45,9 @@ const HeaderUserProfile = ({ compact = false }: HeaderUserProfileProps) => {
                         fontSize: '14px',
                         textDecoration: 'none',
                         transition: 'all 0.3s ease',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        boxSizing: 'border-box',
                     }}
                     onMouseEnter={(e) => {
                         e.currentTarget.style.background = '#014D40';
@@ -80,6 +83,9 @@ const HeaderUserProfile = ({ compact = false }: HeaderUserProfileProps) => {
                         textDecoration: 'none',
                         transition: 'all 0.3s ease',
                         boxShadow: '0 2px 8px rgba(1, 77, 64, 0.2)',
+                        whiteSpace: 'nowrap',
+                        flexShrink: 0,
+                        boxSizing: 'border-box',
                     }}
                     onMouseEnter={(e) => {
                         e.currentTarget.style.transform = 'translateY(-2px)';

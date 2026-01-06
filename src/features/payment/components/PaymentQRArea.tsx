@@ -7,7 +7,7 @@ import { useLanguage } from '@/context/LanguageContext';
 const PaymentQRArea = () => {
     const { t } = useLanguage();
     const router = useRouter();
-    const [timeLeft, setTimeLeft] = useState(9 * 60 + 33); // 9 minutes 33 seconds
+    const [timeLeft, setTimeLeft] = useState(1 * 60); // 5 minutes
     const orderTotal = 364.35;
     const orderId = 'REF212560350598';
 
@@ -18,14 +18,18 @@ const PaymentQRArea = () => {
     };
 
     useEffect(() => {
-        if (timeLeft <= 0) return;
+        if (timeLeft <= 0) {
+            // Redirect to payment fail page when timeout
+            router.push('/payment-fail?type=qr');
+            return;
+        }
 
         const timer = setInterval(() => {
             setTimeLeft(prev => prev - 1);
         }, 1000);
 
         return () => clearInterval(timer);
-    }, [timeLeft]);
+    }, [timeLeft, router]);
 
     const formatTime = (seconds: number) => {
         const hrs = Math.floor(seconds / 3600);

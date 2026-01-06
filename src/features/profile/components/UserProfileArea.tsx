@@ -1,13 +1,17 @@
 "use client";
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/features/auth';
 import { useLanguage } from '@/context/LanguageContext';
 
 const UserProfileArea = () => {
-    const { user, isAuthenticated } = useAuth();
+    const { user, isAuthenticated, updateProfile } = useAuth();
     const { t } = useLanguage();
+
+    // Edit name state
+    const [isEditingName, setIsEditingName] = useState(false);
+    const [editedName, setEditedName] = useState('');
 
     // Mock data for courses
     const enrolledCourses = [
@@ -89,7 +93,86 @@ const UserProfileArea = () => {
                                             {user.name?.charAt(0).toUpperCase() || 'U'}
                                         </div>
                                         <div>
-                                            <h2 style={{ margin: '0 0 8px', fontWeight: '700', color: '#fff' }}>{user.name}</h2>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '8px' }}>
+                                                {isEditingName ? (
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                                        <input
+                                                            type="text"
+                                                            value={editedName}
+                                                            onChange={(e) => setEditedName(e.target.value)}
+                                                            style={{
+                                                                fontSize: '24px',
+                                                                fontWeight: '700',
+                                                                padding: '8px 12px',
+                                                                borderRadius: '8px',
+                                                                border: '2px solid #fff',
+                                                                background: 'rgba(255,255,255,0.1)',
+                                                                color: '#fff',
+                                                                outline: 'none',
+                                                                width: '250px'
+                                                            }}
+                                                            autoFocus
+                                                        />
+                                                        <button
+                                                            onClick={async () => {
+                                                                if (editedName.trim()) {
+                                                                    await updateProfile({ name: editedName.trim() });
+                                                                    setIsEditingName(false);
+                                                                }
+                                                            }}
+                                                            style={{
+                                                                padding: '8px 16px',
+                                                                background: '#22c55e',
+                                                                color: '#fff',
+                                                                border: 'none',
+                                                                borderRadius: '8px',
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500'
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-check"></i>
+                                                        </button>
+                                                        <button
+                                                            onClick={() => {
+                                                                setIsEditingName(false);
+                                                                setEditedName(user.name || '');
+                                                            }}
+                                                            style={{
+                                                                padding: '8px 16px',
+                                                                background: 'rgba(255,255,255,0.2)',
+                                                                color: '#fff',
+                                                                border: 'none',
+                                                                borderRadius: '8px',
+                                                                cursor: 'pointer',
+                                                                fontWeight: '500'
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                ) : (
+                                                    <>
+                                                        <h2 style={{ margin: 0, fontWeight: '700', color: '#fff' }}>{user.name}</h2>
+                                                        <button
+                                                            onClick={() => {
+                                                                setEditedName(user.name || '');
+                                                                setIsEditingName(true);
+                                                            }}
+                                                            style={{
+                                                                padding: '6px 12px',
+                                                                background: 'rgba(255,255,255,0.2)',
+                                                                color: '#fff',
+                                                                border: 'none',
+                                                                borderRadius: '6px',
+                                                                cursor: 'pointer',
+                                                                fontSize: '13px'
+                                                            }}
+                                                        >
+                                                            <i className="fas fa-edit me-1"></i>{t('แก้ไข', 'Edit')}
+                                                        </button>
+                                                    </>
+                                                )}
+                                            </div>
                                             <p style={{ margin: '0 0 5px', opacity: 0.9 }}>
                                                 <i className="fas fa-envelope me-2"></i>{user.email}
                                             </p>
@@ -245,76 +328,78 @@ const UserProfileArea = () => {
                                 </Link>
                             </div>
 
-                            <div className="row g-4">
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {enrolledCourses.map((course) => (
-                                    <div key={course.id} className="col-lg-4 col-md-6">
+                                    <div key={course.id} style={{
+                                        background: '#fff',
+                                        border: '1px solid #e5e7eb',
+                                        borderRadius: '12px',
+                                        padding: '20px',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: '20px',
+                                        transition: 'box-shadow 0.3s ease',
+                                    }}>
+                                        {/* Course Icon */}
                                         <div style={{
-                                            background: '#f8f9fa',
-                                            borderRadius: '15px',
-                                            overflow: 'hidden',
-                                            transition: 'transform 0.3s ease',
+                                            width: '80px',
+                                            height: '80px',
+                                            borderRadius: '12px',
+                                            background: 'linear-gradient(135deg, #004736 0%, #006B52 100%)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            flexShrink: 0
                                         }}>
-                                            <div style={{
-                                                height: '140px',
-                                                background: 'linear-gradient(135deg, #004736 0%, #006B52 100%)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                position: 'relative'
-                                            }}>
-                                                <i className="fas fa-play-circle" style={{ fontSize: '40px', color: 'rgba(255,255,255,0.3)' }}></i>
+                                            <i className="fas fa-book-open" style={{ fontSize: '28px', color: '#fff' }}></i>
+                                        </div>
+
+                                        {/* Course Info */}
+                                        <div style={{ flex: 1, minWidth: 0 }}>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                                                <h5 style={{ margin: 0, color: '#333', fontSize: '16px', fontWeight: '600' }}>
+                                                    {course.title}
+                                                </h5>
                                                 {course.status === 'completed' && (
                                                     <span style={{
-                                                        position: 'absolute',
-                                                        top: '10px',
-                                                        right: '10px',
-                                                        background: '#22c55e',
-                                                        color: '#fff',
-                                                        padding: '5px 12px',
+                                                        background: '#dcfce7',
+                                                        color: '#22c55e',
+                                                        padding: '3px 10px',
                                                         borderRadius: '20px',
-                                                        fontSize: '12px',
-                                                        fontWeight: '500'
+                                                        fontSize: '11px',
+                                                        fontWeight: '600',
+                                                        whiteSpace: 'nowrap'
                                                     }}>
                                                         <i className="fas fa-check me-1"></i>{t('เรียนจบแล้ว', 'Completed')}
                                                     </span>
                                                 )}
                                                 {course.status === 'in_progress' && (
                                                     <span style={{
-                                                        position: 'absolute',
-                                                        top: '10px',
-                                                        right: '10px',
-                                                        background: '#f59e0b',
-                                                        color: '#fff',
-                                                        padding: '5px 12px',
+                                                        background: '#fef3c7',
+                                                        color: '#f59e0b',
+                                                        padding: '3px 10px',
                                                         borderRadius: '20px',
-                                                        fontSize: '12px',
-                                                        fontWeight: '500'
+                                                        fontSize: '11px',
+                                                        fontWeight: '600',
+                                                        whiteSpace: 'nowrap'
                                                     }}>
                                                         {t('กำลังเรียน', 'In Progress')}
                                                     </span>
                                                 )}
                                             </div>
-                                            <div style={{ padding: '20px' }}>
-                                                <h5 style={{ margin: '0 0 8px', color: '#333', fontSize: '16px', fontWeight: '600' }}>
-                                                    {course.title}
-                                                </h5>
-                                                <p style={{ margin: '0 0 15px', color: '#666', fontSize: '14px' }}>
-                                                    <i className="fas fa-user me-2"></i>{course.instructor}
-                                                </p>
-                                                <div className="d-flex justify-content-between align-items-center mb-2">
-                                                    <span style={{ color: '#004736', fontWeight: '500', fontSize: '14px' }}>
-                                                        {course.cpe} {t('หน่วยกิต', 'Credits')}
-                                                    </span>
-                                                    <span style={{ color: '#666', fontSize: '14px' }}>
-                                                        {course.progress}% {t('เสร็จสิ้น', 'Complete')}
-                                                    </span>
-                                                </div>
+                                            <p style={{ margin: '0 0 10px', color: '#666', fontSize: '13px' }}>
+                                                <i className="fas fa-user me-2"></i>{course.instructor}
+                                                <span style={{ margin: '0 10px', color: '#ddd' }}>|</span>
+                                                <i className="fas fa-certificate me-1"></i>{course.cpe} {t('หน่วยกิต', 'Credits')}
+                                            </p>
+                                            {/* Progress Bar */}
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                                 <div style={{
+                                                    flex: 1,
                                                     height: '8px',
                                                     background: '#e5e7eb',
                                                     borderRadius: '4px',
-                                                    overflow: 'hidden',
-                                                    marginBottom: '15px'
+                                                    overflow: 'hidden'
                                                 }}>
                                                     <div style={{
                                                         width: `${course.progress}%`,
@@ -323,23 +408,68 @@ const UserProfileArea = () => {
                                                         borderRadius: '4px'
                                                     }}></div>
                                                 </div>
+                                                <span style={{ color: '#666', fontSize: '13px', fontWeight: '500', whiteSpace: 'nowrap' }}>
+                                                    {course.progress}%
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* Action Buttons */}
+                                        <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
+                                            {course.progress === 100 ? (
+                                                <>
+                                                    <Link
+                                                        href={`/course-learning?id=${course.id}`}
+                                                        style={{
+                                                            padding: '10px 20px',
+                                                            background: '#22c55e',
+                                                            color: '#fff',
+                                                            borderRadius: '8px',
+                                                            textDecoration: 'none',
+                                                            fontWeight: '500',
+                                                            fontSize: '14px',
+                                                            whiteSpace: 'nowrap'
+                                                        }}
+                                                    >
+                                                        {t('ดูใบประกาศ', 'Certificate')}
+                                                    </Link>
+                                                    <button
+                                                        onClick={() => {
+                                                            // Simulate download CPE
+                                                            alert(t('กำลังดาวน์โหลดใบ CPE...', 'Downloading CPE certificate...'));
+                                                        }}
+                                                        style={{
+                                                            padding: '10px 20px',
+                                                            background: '#fff',
+                                                            color: '#22c55e',
+                                                            border: '2px solid #22c55e',
+                                                            borderRadius: '8px',
+                                                            fontWeight: '500',
+                                                            fontSize: '14px',
+                                                            whiteSpace: 'nowrap',
+                                                            cursor: 'pointer'
+                                                        }}
+                                                    >
+                                                        <i className="fas fa-download me-1"></i>{t('โหลด CPE', 'Download CPE')}
+                                                    </button>
+                                                </>
+                                            ) : (
                                                 <Link
                                                     href={`/course-learning?id=${course.id}`}
                                                     style={{
-                                                        display: 'block',
-                                                        textAlign: 'center',
-                                                        padding: '10px',
-                                                        background: course.progress === 100 ? '#22c55e' : '#004736',
+                                                        padding: '10px 24px',
+                                                        background: '#004736',
                                                         color: '#fff',
                                                         borderRadius: '8px',
                                                         textDecoration: 'none',
                                                         fontWeight: '500',
-                                                        fontSize: '14px'
+                                                        fontSize: '14px',
+                                                        whiteSpace: 'nowrap'
                                                     }}
                                                 >
-                                                    {course.progress === 100 ? t('ดูใบประกาศ', 'View Certificate') : t('เรียนต่อ', 'Continue')}
+                                                    {t('เรียนต่อ', 'Continue')}
                                                 </Link>
-                                            </div>
+                                            )}
                                         </div>
                                     </div>
                                 ))}

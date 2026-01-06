@@ -2,16 +2,21 @@
 
 import Link from 'next/link';
 import React, { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/context/LanguageContext';
 
 // Interactive Quiz data with timestamps
 interface VideoQuiz {
     timeInSeconds: number;
     question: string;
-    options: string[];
-    correctAnswer: number;
+    type: 'multiple_choice' | 'written'; // ประเภทคำถาม
+    options?: string[]; // สำหรับ multiple choice
+    correctAnswer?: number; // สำหรับ multiple choice
+    sampleAnswer?: string; // ตัวอย่างคำตอบสำหรับข้อเขียน
+    minLength?: number; // ความยาวขั้นต่ำของคำตอบ (ตัวอักษร)
 }
 
 const CourseLearningArea = () => {
+    const { t } = useLanguage();
     const [currentLesson, setCurrentLesson] = useState(1);
     const [isPlaying, setIsPlaying] = useState(false);
     const [activeTab, setActiveTab] = useState<'resources'>('resources');
@@ -25,14 +30,15 @@ const CourseLearningArea = () => {
     const [showQuizPopup, setShowQuizPopup] = useState(false);
     const [currentQuiz, setCurrentQuiz] = useState<VideoQuiz | null>(null);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-    const [answerResult, setAnswerResult] = useState<'correct' | 'wrong' | null>(null);
+    const [writtenAnswer, setWrittenAnswer] = useState(''); // สำหรับคำตอบข้อเขียน
+    const [answerResult, setAnswerResult] = useState<'correct' | 'wrong' | 'submitted' | null>(null);
     const [videoTime, setVideoTime] = useState(0);
     const [answeredQuizzes, setAnsweredQuizzes] = useState<number[]>([]);
 
     // Simulate video progress
     const videoTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-    const courseName = 'เภสัชวิทยาคลินิกเบื้องต้น';
+    const courseName = t('เภสัชวิทยาคลินิกเบื้องต้น', 'Introduction to Clinical Pharmacology');
     const courseProgress = 40;
 
     const lessons = [
@@ -58,6 +64,7 @@ const CourseLearningArea = () => {
             videoQuizzes: [
                 {
                     timeInSeconds: 5, // Quiz at 5 seconds 
+                    type: 'multiple_choice',
                     question: 'เภสัชวิทยา (Pharmacology) หมายถึงอะไร?',
                     options: [
                         'การศึกษาเกี่ยวกับยาและผลของยาต่อร่างกาย',
@@ -68,18 +75,15 @@ const CourseLearningArea = () => {
                     correctAnswer: 0
                 },
                 {
-                    timeInSeconds: 15, // Quiz at 15 seconds
-                    question: 'Pharmacokinetics เกี่ยวข้องกับอะไร?',
-                    options: [
-                        'ผลของยาต่อร่างกาย',
-                        'การเคลื่อนที่ของยาในร่างกาย',
-                        'โครงสร้างทางเคมีของยา',
-                        'การผลิตยา'
-                    ],
-                    correctAnswer: 1
+                    timeInSeconds: 15, // Quiz at 15 seconds - คำถามข้อเขียน
+                    type: 'written',
+                    question: 'จงอธิบายความแตกต่างระหว่าง Pharmacokinetics และ Pharmacodynamics โดยสังเขป',
+                    sampleAnswer: 'Pharmacokinetics คือการศึกษาว่ายาเคลื่อนที่ในร่างกายอย่างไร (ADME) ส่วน Pharmacodynamics คือการศึกษาว่ายาออกฤทธิ์ต่อร่างกายอย่างไร',
+                    minLength: 0
                 },
                 {
                     timeInSeconds: 30, // Quiz at 30 seconds
+                    type: 'multiple_choice',
                     question: 'ข้อใดเป็นขั้นตอนของ ADME?',
                     options: [
                         'Analysis, Design, Making, Evaluation',
@@ -105,6 +109,7 @@ const CourseLearningArea = () => {
             videoQuizzes: [
                 {
                     timeInSeconds: 10,
+                    type: 'multiple_choice',
                     question: 'Receptor ทำหน้าที่อะไร?',
                     options: [
                         'ผลิตยาในร่างกาย',
@@ -113,6 +118,13 @@ const CourseLearningArea = () => {
                         'เก็บยาไว้ในกล้ามเนื้อ'
                     ],
                     correctAnswer: 1
+                },
+                {
+                    timeInSeconds: 20,
+                    type: 'written',
+                    question: 'จงยกตัวอย่าง Receptor ที่สำคัญในร่างกายมา 2 ชนิด พร้อมอธิบายหน้าที่โดยสังเขป',
+                    sampleAnswer: 'เช่น Beta-receptor ทำหน้าที่ควบคุมหัวใจและหลอดลม, Dopamine receptor ทำหน้าที่ควบคุมอารมณ์และการเคลื่อนไหว',
+                    minLength: 0
                 }
             ]
         },
@@ -173,9 +185,10 @@ const CourseLearningArea = () => {
                     if (quiz) {
                         // Pause video and show quiz
                         setIsPlaying(false);
-                        setCurrentQuiz(quiz);
+                        setCurrentQuiz(quiz as VideoQuiz);
                         setShowQuizPopup(true);
                         setSelectedAnswer(null);
+                        setWrittenAnswer(''); // รีเซ็ตคำตอบข้อเขียน
                         setAnswerResult(null);
                     }
 
@@ -217,17 +230,27 @@ const CourseLearningArea = () => {
     };
 
     const handleAnswerSubmit = () => {
-        if (selectedAnswer === null || !currentQuiz) return;
+        if (!currentQuiz) return;
 
-        const isCorrect = selectedAnswer === currentQuiz.correctAnswer;
-        setAnswerResult(isCorrect ? 'correct' : 'wrong');
+        // สำหรับคำถามแบบตัวเลือก
+        if (currentQuiz.type === 'multiple_choice') {
+            if (selectedAnswer === null) return;
+            const isCorrect = selectedAnswer === currentQuiz.correctAnswer;
+            setAnswerResult(isCorrect ? 'correct' : 'wrong');
+        }
+        // สำหรับคำถามแบบข้อเขียน
+        else if (currentQuiz.type === 'written') {
+            // ไม่มีเงื่อนไขขั้นต่ำ ส่งได้ทันที
+            setAnswerResult('submitted'); // ส่งคำตอบแล้ว
+        }
 
-        // After showing result, close popup and continue video regardless of answer
+        // After showing result, close popup and continue video
         setTimeout(() => {
             setAnsweredQuizzes([...answeredQuizzes, currentQuiz.timeInSeconds]);
             setShowQuizPopup(false);
             setCurrentQuiz(null);
             setSelectedAnswer(null);
+            setWrittenAnswer(''); // รีเซ็ตคำตอบข้อเขียน
             setAnswerResult(null);
             setIsPlaying(true); // Resume video
         }, 1500);
@@ -283,11 +306,11 @@ const CourseLearningArea = () => {
                                     }}>
                                         <i className="fas fa-book-medical" style={{ fontSize: '18px' }}></i>
                                     </div>
-                                    <h6 style={{ margin: 0, fontSize: '15px', fontWeight: '600' }}>{courseName}</h6>
+                                    <h6 style={{ margin: 0, fontSize: '15px', fontWeight: '600', color: '#fff', textShadow: '0 1px 2px rgba(0,0,0,0.2)' }}>{courseName}</h6>
                                 </div>
                                 <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'space-between', fontSize: '13px' }}>
-                                    <span>ความคืบหน้า</span>
-                                    <span>{completedCount}/{lessons.length} บท ({courseProgress}%)</span>
+                                    <span>{t('ความคืบหน้า', 'Progress')}</span>
+                                    <span>{completedCount}/{lessons.length} {t('บท', 'lessons')} ({courseProgress}%)</span>
                                 </div>
                                 <div style={{
                                     height: '8px',
@@ -308,7 +331,7 @@ const CourseLearningArea = () => {
                             {/* Lessons List */}
                             <h6 style={{ color: '#014D40', marginBottom: '16px', fontWeight: '600' }}>
                                 <i className="fas fa-list-ul" style={{ marginRight: '8px' }}></i>
-                                เนื้อหาการเรียน
+                                {t('เนื้อหาการเรียน', 'Course Content')}
                             </h6>
 
                             <div style={{ maxHeight: 'calc(100vh - 350px)', overflowY: 'auto' }}>
@@ -534,16 +557,16 @@ const CourseLearningArea = () => {
                                                     >
                                                         <i className="fas fa-pause" style={{ fontSize: '20px' }}></i>
                                                     </div>
-                                                    <p style={{ fontSize: '18px', marginBottom: '8px' }}>กำลังเล่นวิดีโอ...</p>
+                                                    <p style={{ fontSize: '18px', marginBottom: '8px' }}>{t('กำลังเล่นวิดีโอ...', 'Playing video...')}</p>
                                                     <p style={{ fontSize: '32px', fontWeight: 'bold', color: '#40C7A9' }}>
                                                         {formatTime(videoTime)}
                                                     </p>
                                                     <p style={{ fontSize: '13px', color: '#888', marginTop: '8px' }}>
-                                                        คลิกเพื่อหยุดวิดีโอ
+                                                        {t('คลิกเพื่อหยุดวิดีโอ', 'Click to pause')}
                                                     </p>
                                                     {currentLessonData?.videoQuizzes && currentLessonData.videoQuizzes.length > 0 && (
                                                         <p style={{ fontSize: '14px', color: '#888', marginTop: '12px' }}>
-                                                            🎯 คำถามถัดไปที่: {formatTime(
+                                                            🎯 {t('คำถามถัดไปที่', 'Next question at')}: {formatTime(
                                                                 currentLessonData.videoQuizzes.find(q => q.timeInSeconds > videoTime && !answeredQuizzes.includes(q.timeInSeconds))?.timeInSeconds || 0
                                                             )}
                                                         </p>
@@ -682,7 +705,7 @@ const CourseLearningArea = () => {
                                                         textAlign: 'center'
                                                     }}
                                                 >
-                                                    📄 เอกสาร
+                                                    📄 {t('เอกสาร', 'Documents')}
                                                 </div>
                                             </div>
 
@@ -743,7 +766,7 @@ const CourseLearningArea = () => {
                                         }}>
                                             <h6 style={{ color: '#014D40', marginBottom: '16px', fontWeight: '600' }}>
                                                 <i className="fas fa-tasks" style={{ marginRight: '8px' }}></i>
-                                                การดำเนินการ
+                                                {t('การดำเนินการ', 'Actions')}
                                             </h6>
                                             <button style={{
                                                 width: '100%',
@@ -757,7 +780,7 @@ const CourseLearningArea = () => {
                                                 marginBottom: '12px'
                                             }}>
                                                 <i className="fas fa-check-circle" style={{ marginRight: '8px' }}></i>
-                                                ทำเครื่องหมายว่าเรียนจบ
+                                                {t('ทำเครื่องหมายว่าเรียนจบ', 'Mark as Complete')}
                                             </button>
                                             {currentLesson < lessons.length && (
                                                 <button
@@ -773,7 +796,7 @@ const CourseLearningArea = () => {
                                                         fontWeight: '600',
                                                     }}
                                                 >
-                                                    บทถัดไป <i className="fas fa-arrow-right"></i>
+                                                    {t('บทถัดไป', 'Next Lesson')} <i className="fas fa-arrow-right"></i>
                                                 </button>
                                             )}
                                         </div>
@@ -853,55 +876,108 @@ const CourseLearningArea = () => {
                             {currentQuiz.question}
                         </p>
 
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
-                            {currentQuiz.options.map((opt, i) => (
-                                <button
-                                    key={i}
-                                    onClick={() => !answerResult && setSelectedAnswer(i)}
+                        {/* คำถามแบบตัวเลือก (Multiple Choice) */}
+                        {currentQuiz.type === 'multiple_choice' && currentQuiz.options && (
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', marginBottom: '24px' }}>
+                                {currentQuiz.options.map((opt, i) => (
+                                    <button
+                                        key={i}
+                                        onClick={() => !answerResult && setSelectedAnswer(i)}
+                                        disabled={answerResult !== null}
+                                        style={{
+                                            padding: '16px 20px',
+                                            border: `2px solid ${answerResult ?
+                                                (i === currentQuiz.correctAnswer ? '#22c55e' :
+                                                    i === selectedAnswer && answerResult === 'wrong' ? '#ef4444' : '#e5e7eb')
+                                                : selectedAnswer === i ? '#014D40' : '#e5e7eb'
+                                                }`,
+                                            borderRadius: '12px',
+                                            background: answerResult ?
+                                                (i === currentQuiz.correctAnswer ? '#dcfce7' :
+                                                    i === selectedAnswer && answerResult === 'wrong' ? '#fee2e2' : '#fff')
+                                                : selectedAnswer === i ? '#e8f8f4' : '#fff',
+                                            textAlign: 'left',
+                                            cursor: answerResult ? 'default' : 'pointer',
+                                            transition: 'all 0.2s ease',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '12px'
+                                        }}
+                                    >
+                                        <span style={{
+                                            width: '32px',
+                                            height: '32px',
+                                            borderRadius: '50%',
+                                            background: answerResult ?
+                                                (i === currentQuiz.correctAnswer ? '#22c55e' :
+                                                    i === selectedAnswer ? '#ef4444' : '#e5e7eb')
+                                                : selectedAnswer === i ? '#014D40' : '#e5e7eb',
+                                            color: (selectedAnswer === i || (answerResult && i === currentQuiz.correctAnswer)) ? '#fff' : '#666',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            fontWeight: '600',
+                                            fontSize: '14px'
+                                        }}>
+                                            {answerResult && i === currentQuiz.correctAnswer ? '✓' :
+                                                answerResult === 'wrong' && i === selectedAnswer ? '✕' :
+                                                    String.fromCharCode(65 + i)}
+                                        </span>
+                                        <span style={{ color: '#333' }}>{opt}</span>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+
+                        {/* คำถามแบบข้อเขียน (Written) */}
+                        {currentQuiz.type === 'written' && (
+                            <div style={{ marginBottom: '24px' }}>
+                                <div style={{
+                                    background: '#f0f9ff',
+                                    border: '1px solid #0ea5e9',
+                                    borderRadius: '12px',
+                                    padding: '12px 16px',
+                                    marginBottom: '16px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '8px'
+                                }}>
+                                    <i className="fas fa-pen" style={{ color: '#0ea5e9' }}></i>
+                                    <span style={{ color: '#0369a1', fontSize: '14px' }}>
+                                        {t('กรุณาพิมพ์คำตอบของคุณ', 'Please type your answer')}
+                                    </span>
+                                </div>
+                                <textarea
+                                    value={writtenAnswer}
+                                    onChange={(e) => setWrittenAnswer(e.target.value)}
+                                    placeholder={t('พิมพ์คำตอบของคุณที่นี่...', 'Type your answer here...')}
                                     disabled={answerResult !== null}
                                     style={{
-                                        padding: '16px 20px',
-                                        border: `2px solid ${answerResult ?
-                                            (i === currentQuiz.correctAnswer ? '#22c55e' :
-                                                i === selectedAnswer && answerResult === 'wrong' ? '#ef4444' : '#e5e7eb')
-                                            : selectedAnswer === i ? '#014D40' : '#e5e7eb'
-                                            }`,
+                                        width: '100%',
+                                        minHeight: '120px',
+                                        padding: '16px',
+                                        border: answerResult === 'submitted' ? '2px solid #22c55e' : '2px solid #e5e7eb',
                                         borderRadius: '12px',
-                                        background: answerResult ?
-                                            (i === currentQuiz.correctAnswer ? '#dcfce7' :
-                                                i === selectedAnswer && answerResult === 'wrong' ? '#fee2e2' : '#fff')
-                                            : selectedAnswer === i ? '#e8f8f4' : '#fff',
-                                        textAlign: 'left',
-                                        cursor: answerResult ? 'default' : 'pointer',
-                                        transition: 'all 0.2s ease',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: '12px'
+                                        fontSize: '15px',
+                                        lineHeight: '1.6',
+                                        resize: 'vertical',
+                                        fontFamily: 'inherit',
+                                        background: answerResult === 'submitted' ? '#f0fdf4' : '#fff',
                                     }}
-                                >
-                                    <span style={{
-                                        width: '32px',
-                                        height: '32px',
-                                        borderRadius: '50%',
-                                        background: answerResult ?
-                                            (i === currentQuiz.correctAnswer ? '#22c55e' :
-                                                i === selectedAnswer ? '#ef4444' : '#e5e7eb')
-                                            : selectedAnswer === i ? '#014D40' : '#e5e7eb',
-                                        color: (selectedAnswer === i || (answerResult && i === currentQuiz.correctAnswer)) ? '#fff' : '#666',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        fontWeight: '600',
-                                        fontSize: '14px'
-                                    }}>
-                                        {answerResult && i === currentQuiz.correctAnswer ? '✓' :
-                                            answerResult === 'wrong' && i === selectedAnswer ? '✕' :
-                                                String.fromCharCode(65 + i)}
+                                />
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-between',
+                                    marginTop: '8px',
+                                    fontSize: '13px'
+                                }}>
+                                    <span style={{ color: '#888' }}>
+                                        {writtenAnswer.length} {t('ตัวอักษร', 'characters')}
                                     </span>
-                                    <span style={{ color: '#333' }}>{opt}</span>
-                                </button>
-                            ))}
-                        </div>
+
+                                </div>
+                            </div>
+                        )}
 
                         {answerResult === 'correct' && (
                             <div style={{
@@ -931,23 +1007,52 @@ const CourseLearningArea = () => {
                             </div>
                         )}
 
+                        {answerResult === 'submitted' && (
+                            <div style={{
+                                background: '#dcfce7',
+                                color: '#166534',
+                                padding: '16px',
+                                borderRadius: '12px',
+                                textAlign: 'center',
+                                marginBottom: '16px',
+                                fontWeight: '600'
+                            }}>
+                                ✅ ส่งคำตอบเรียบร้อย! กำลังเล่นวิดีโอต่อ...
+                                {currentQuiz.sampleAnswer && (
+                                    <p style={{ fontWeight: 'normal', marginTop: '8px', fontSize: '13px' }}>
+                                        💡 ตัวอย่างคำตอบ: {currentQuiz.sampleAnswer}
+                                    </p>
+                                )}
+                            </div>
+                        )}
+
                         {!answerResult && (
                             <button
                                 onClick={handleAnswerSubmit}
-                                disabled={selectedAnswer === null}
+                                disabled={
+                                    currentQuiz.type === 'multiple_choice'
+                                        ? selectedAnswer === null
+                                        : false
+                                }
                                 style={{
                                     width: '100%',
                                     padding: '16px',
-                                    background: selectedAnswer === null ? '#e5e7eb' : 'linear-gradient(135deg, #014D40 0%, #006B5A 100%)',
-                                    color: selectedAnswer === null ? '#999' : '#fff',
+                                    background: (currentQuiz.type === 'multiple_choice' ? selectedAnswer === null : false)
+                                        ? '#e5e7eb'
+                                        : 'linear-gradient(135deg, #014D40 0%, #006B5A 100%)',
+                                    color: (currentQuiz.type === 'multiple_choice' ? selectedAnswer === null : false)
+                                        ? '#999'
+                                        : '#fff',
                                     border: 'none',
                                     borderRadius: '12px',
                                     fontWeight: '600',
-                                    cursor: selectedAnswer === null ? 'not-allowed' : 'pointer',
+                                    cursor: (currentQuiz.type === 'multiple_choice' ? selectedAnswer === null : false)
+                                        ? 'not-allowed'
+                                        : 'pointer',
                                     fontSize: '16px'
                                 }}
                             >
-                                ตรวจคำตอบ
+                                {currentQuiz.type === 'written' ? 'ส่งคำตอบ' : 'ตรวจคำตอบ'}
                             </button>
                         )}
                     </div>
