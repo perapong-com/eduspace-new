@@ -708,4 +708,72 @@ label[for] {
     color: #666 !important;
     font-size: 12px !important;
   }
+
+  /* Checkout Page Responsive */
+
+  /* Swap order - Cart first, Payment second on mobile */
+  .checkout-section .row {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .checkout-section .col-lg-7 {
+    order: 2 !important;
+  }
+
+  .checkout-section .col-lg-5 {
+    order: 1 !important;
+  }
+
+  .checkout-section .payment-wrapper {
+    padding: 16px !important;
+  }
+
+  .checkout-section .cart-wrapper {
+    padding: 16px !important;
+  }
+
+  /* Payment methods - stack vertically */
+  .checkout-section .payment-methods {
+    flex-direction: column !important;
+  }
+
+  .checkout-section .payment-methods label {
+    height: auto !important;
+    min-height: 60px !important;
+    padding: 12px 14px !important;
+  }
+
+  /* Receipt type - stack vertically */
+  .checkout-section .receipt-type-section .d-flex.gap-3 {
+    flex-direction: column !important;
+  }
+
+  .checkout-section .receipt-type-section label {
+    padding: 12px 14px !important;
+  }
+
+  /* Form rows - stack vertically on small screens */
+  .checkout-section .d-flex.gap-2 {
+    flex-direction: column !important;
+  }
+
+  .checkout-section .d-flex.gap-2>div {
+    flex: none !important;
+    width: 100% !important;
+  }
+
+  /* Cart items - smaller image */
+  .checkout-section .cart-item img {
+    width: 60px !important;
+    height: 45px !important;
+  }
+
+  .checkout-section .cart-wrapper h5 {
+    font-size: 16px !important;
+  }
+
+  .checkout-section .section-padding {
+    padding: 20px 0 !important;
+  }
 }
