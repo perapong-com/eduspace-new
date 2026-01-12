@@ -1,6 +1,6 @@
 "use client"
 import Link from 'next/link';
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import EnrollButton from '@/components/common/EnrollButton';
 import { useLanguage } from '@/features/i18n';
 
@@ -115,7 +115,19 @@ const CoursesGridArea = () => {
     const [selectedPriceRange, setSelectedPriceRange] = useState(0); // index of PRICE_RANGES
     const [isFilterOpen, setIsFilterOpen] = useState(true); // Collapsible filter state
 
-
+    // Set filter closed by default on mobile
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 1024) {
+                setIsFilterOpen(false);
+            } else {
+                setIsFilterOpen(true);
+            }
+        };
+        
+        // Check on mount
+        handleResize();
+    }, []);
     // Filter courses based on search, category, and price range
     const filteredCourses = useMemo(() => {
         const priceRange = PRICE_RANGES[selectedPriceRange];

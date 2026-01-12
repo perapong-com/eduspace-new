@@ -238,7 +238,7 @@ label[for] {
 /* Reduce breadcrumb banner height on mobile */
 @media (max-width: 640px) {
   .breadcrumb-wrapper.courses-page-banner {
-    padding: 30px 0 !important;
+    padding: 20px 0 !important;
     min-height: auto !important;
   }
 
@@ -303,4 +303,17 @@ label[for] {
   max-height: 1000px;
   opacity: 1;
   transition: max-height 0.4s ease-in, opacity 0.3s ease;
+}
+
+/* PC: Hide toggle button and always show filter content */
+@media (min-width: 1025px) {
+  .filter-toggle-btn {
+    display: none !important;
+  }
+  
+  .filter-content {
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
 }
