@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import MarqueeOne from '@/components/common/MarqueeOne';
 import FooterTwo from '@/components/layout/footers/FooterTwo';
 import HeaderTwo from '@/components/layout/headers/HeaderTwo';
@@ -16,7 +16,9 @@ const PaymentFailPage = () => {
         <>
             <MarqueeOne />
             <HeaderTwo />
-            <PaymentFailArea />
+            <Suspense fallback={<div className="text-center py-5">กำลังโหลด...</div>}>
+                <PaymentFailArea />
+            </Suspense>
             <FooterTwo />
         </>
     );
