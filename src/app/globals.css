@@ -2,7 +2,9 @@
 
 /* Global Font - Thai Sarabun (Google Fonts version) */
 /* Exclude icon fonts (Font Awesome, etc.) from font override */
-*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not([class*="far"]):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
+*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not(
+    [class*="far"]
+  ):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
   font-family: "Sarabun", "TH Sarabun New", sans-serif !important;
 }
 
@@ -22,7 +24,8 @@ body {
 .fab,
 [class*="fa-"],
 i[class*="fa"] {
-  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands",
+    "Font Awesome 5 Free", "Font Awesome 5 Brands", FontAwesome !important;
 }
 
 @layer base {
@@ -65,19 +68,19 @@ i[class*="fa"] {
 
 /* Language-based font families */
 html.lang-th {
-  font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
+  font-family: "Sarabun", "TH Sarabun New", sans-serif;
 }
 
 html.lang-en {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 html.lang-th body {
-  font-family: 'Sarabun', 'TH Sarabun New', sans-serif;
+  font-family: "Sarabun", "TH Sarabun New", sans-serif;
 }
 
 html.lang-en body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Exclude FontAwesome icons from font override */
@@ -198,10 +201,10 @@ i.fa,
 }
 
 /* Checkbox and Radio labels */
-input[type="checkbox"]+label,
-input[type="checkbox"]+span,
-input[type="radio"]+label,
-input[type="radio"]+span,
+input[type="checkbox"] + label,
+input[type="checkbox"] + span,
+input[type="radio"] + label,
+input[type="radio"] + span,
 .form-check-label,
 .checkbox label,
 .radio label,
@@ -225,4 +228,79 @@ label[for] {
 .courses-sidebar-items label,
 .courses-sidebar-items .text-color {
   font-size: 16px !important;
+}
+
+/* ========================================
+   Mobile Responsive - Course Page
+   Mobile: ≤640px, Tablet: 641-1024px
+   ======================================== */
+
+/* Reduce breadcrumb banner height on mobile */
+@media (max-width: 640px) {
+  .breadcrumb-wrapper.courses-page-banner {
+    padding: 30px 0 !important;
+    min-height: auto !important;
+  }
+
+  .breadcrumb-wrapper.courses-page-banner .page-heading h1 {
+    font-size: 1.6rem !important;
+    margin-bottom: 8px;
+  }
+
+  .breadcrumb-wrapper.courses-page-banner .breadcrumb-items {
+    font-size: 0.9rem !important;
+  }
+
+  /* Hide decorative shapes on mobile */
+  .breadcrumb-wrapper.courses-page-banner .shape-1,
+  .breadcrumb-wrapper.courses-page-banner .shape-2,
+  .breadcrumb-wrapper.courses-page-banner .shape-3,
+  .breadcrumb-wrapper.courses-page-banner .dot-shape,
+  .breadcrumb-wrapper.courses-page-banner .vector-shape {
+    display: none !important;
+  }
+}
+
+/* Collapsible Filter Section Styles */
+.filter-toggle-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background: linear-gradient(135deg, #0d4f4a 0%, #0a3d39 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.filter-toggle-btn:hover {
+  background: linear-gradient(135deg, #0a3d39 0%, #072e2b 100%);
+  transform: translateY(-1px);
+}
+
+.filter-toggle-btn i {
+  transition: transform 0.3s ease;
+}
+
+.filter-toggle-btn.open i {
+  transform: rotate(180deg);
+}
+
+.filter-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.3s ease;
+  opacity: 0;
+}
+
+.filter-content.open {
+  max-height: 1000px;
+  opacity: 1;
+  transition: max-height 0.4s ease-in, opacity 0.3s ease;
 }

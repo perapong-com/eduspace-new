@@ -113,6 +113,7 @@ const CoursesGridArea = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('all');
     const [selectedPriceRange, setSelectedPriceRange] = useState(0); // index of PRICE_RANGES
+    const [isFilterOpen, setIsFilterOpen] = useState(true); // Collapsible filter state
 
 
     // Filter courses based on search, category, and price range
@@ -143,6 +144,20 @@ const CoursesGridArea = () => {
                         {/* Sidebar Filters */}
                         <div className="col-xl-3 col-lg-4">
                             <div className="courses-main-sidebar-area">
+                                {/* Filter Toggle Button */}
+                                <button 
+                                    className={`filter-toggle-btn ${isFilterOpen ? 'open' : ''}`}
+                                    onClick={() => setIsFilterOpen(!isFilterOpen)}
+                                >
+                                    <span>
+                                        <i className="fas fa-filter me-2"></i>
+                                        {t('ค้นหา / คัดกรองคอร์ส', 'Search / Filter Courses')}
+                                    </span>
+                                    <i className="fas fa-chevron-down"></i>
+                                </button>
+                                
+                                {/* Collapsible Filter Content */}
+                                <div className={`filter-content ${isFilterOpen ? 'open' : ''}`}>
                                 <div className="courses-main-sidebar">
                                     {/* Search */}
                                     <div className="courses-sidebar-items">
@@ -218,6 +233,7 @@ const CoursesGridArea = () => {
                                         <i className="far fa-times-circle me-2"></i>{t('ล้างตัวกรอง', 'Clear Filters')}
                                     </button>
                                 </div>
+                                </div> {/* End filter-content */}
                             </div>
 
                             {/* Courses Grid */}
