@@ -317,3 +317,102 @@ label[for] {
     overflow: visible !important;
   }
 }
+
+/* ========================================
+   Mobile Responsive - Course Details Page
+   ======================================== */
+
+/* Reduce breadcrumb banner height on mobile (style-2 is for course details) */
+@media (max-width: 640px) {
+  .breadcrumb-wrapper.style-2 {
+    padding: 20px 0 !important;
+    min-height: auto !important;
+  }
+  
+  .breadcrumb-wrapper.style-2 .page-heading h1 {
+    font-size: 1.4rem !important;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  
+  /* Hide decorative shapes on mobile */
+  .breadcrumb-wrapper.style-2 .shape-1,
+  .breadcrumb-wrapper.style-2 .shape-2,
+  .breadcrumb-wrapper.style-2 .dot-shape,
+  .breadcrumb-wrapper.style-2 .vector-shape {
+    display: none !important;
+  }
+  
+  /* Adjust meta info layout (Instructor/Category/Price) */
+  .breadcrumb-wrapper.style-2 .courses-breadcrumb-items {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  
+  .breadcrumb-wrapper.style-2 .client-image-items {
+    flex: 0 0 45%;
+  }
+  
+  .breadcrumb-wrapper.style-2 .client-content span {
+    font-size: 12px;
+  }
+  
+  .breadcrumb-wrapper.style-2 .client-content h5 {
+    font-size: 14px !important;
+  }
+}
+
+/* Enlarge Review Stars */
+.breadcrumb-wrapper .star i.fa-star,
+.breadcrumb-wrapper.style-2 .star i {
+  font-size: 18px !important;
+  color: #f5a623;
+}
+
+.breadcrumb-wrapper .star b,
+.breadcrumb-wrapper.style-2 .star b {
+  font-size: 16px !important;
+  margin-left: 6px;
+}
+
+/* Course Details Content - Better Mobile Padding */
+@media (max-width: 640px) {
+  .courses-details-section .container {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .courses-details-section .courses-details-items {
+    padding: 0;
+  }
+  
+  /* Tabs in single row on mobile */
+  .courses-details-content .nav,
+  .courses-details-section .nav {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    flex-direction: row !important;
+    overflow-x: auto;
+    gap: 0;
+    justify-content: flex-start;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+  
+  .courses-details-content .nav::-webkit-scrollbar,
+  .courses-details-section .nav::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+  }
+  
+  .courses-details-content .nav .nav-item,
+  .courses-details-section .nav .nav-item {
+    flex-shrink: 0;
+  }
+  
+  .courses-details-content .nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 8px 12px;
+    font-size: 16px !important;
+    white-space: nowrap;
+  }
+}
