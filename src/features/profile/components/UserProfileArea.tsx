@@ -328,9 +328,9 @@ const UserProfileArea = () => {
                                 </Link>
                             </div>
 
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <div className="course-cards-list" style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
                                 {enrolledCourses.map((course) => (
-                                    <div key={course.id} style={{
+                                    <div key={course.id} className="course-card" style={{
                                         background: '#fff',
                                         border: '1px solid #e5e7eb',
                                         borderRadius: '12px',
@@ -339,9 +339,10 @@ const UserProfileArea = () => {
                                         alignItems: 'center',
                                         gap: '20px',
                                         transition: 'box-shadow 0.3s ease',
+                                        position: 'relative',
                                     }}>
                                         {/* Course Icon */}
-                                        <div style={{
+                                        <div className="course-card-icon" style={{
                                             width: '80px',
                                             height: '80px',
                                             borderRadius: '12px',
@@ -355,13 +356,13 @@ const UserProfileArea = () => {
                                         </div>
 
                                         {/* Course Info */}
-                                        <div style={{ flex: 1, minWidth: 0 }}>
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
-                                                <h5 style={{ margin: 0, color: '#333', fontSize: '16px', fontWeight: '600' }}>
+                                        <div className="course-card-info" style={{ flex: 1, minWidth: 0 }}>
+                                            <div className="course-card-header" style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}>
+                                                <h5 className="course-card-title" style={{ margin: 0, color: '#333', fontSize: '16px', fontWeight: '600' }}>
                                                     {course.title}
                                                 </h5>
                                                 {course.status === 'completed' && (
-                                                    <span style={{
+                                                    <span className="course-card-badge completed" style={{
                                                         background: '#dcfce7',
                                                         color: '#22c55e',
                                                         padding: '3px 10px',
@@ -374,7 +375,7 @@ const UserProfileArea = () => {
                                                     </span>
                                                 )}
                                                 {course.status === 'in_progress' && (
-                                                    <span style={{
+                                                    <span className="course-card-badge in-progress" style={{
                                                         background: '#fef3c7',
                                                         color: '#f59e0b',
                                                         padding: '3px 10px',
@@ -387,13 +388,13 @@ const UserProfileArea = () => {
                                                     </span>
                                                 )}
                                             </div>
-                                            <p style={{ margin: '0 0 10px', color: '#666', fontSize: '13px' }}>
+                                            <p className="course-card-meta" style={{ margin: '0 0 10px', color: '#666', fontSize: '13px' }}>
                                                 <i className="fas fa-user me-2"></i>{course.instructor}
                                                 <span style={{ margin: '0 10px', color: '#ddd' }}>|</span>
                                                 <i className="fas fa-certificate me-1"></i>{course.cpe} {t('หน่วยกิต', 'Credits')}
                                             </p>
                                             {/* Progress Bar */}
-                                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                                            <div className="course-card-progress" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                                                 <div style={{
                                                     flex: 1,
                                                     height: '8px',
@@ -415,7 +416,7 @@ const UserProfileArea = () => {
                                         </div>
 
                                         {/* Action Buttons */}
-                                        <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
+                                        <div className="course-card-actions" style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
                                             {course.progress === 100 ? (
                                                 <>
                                                     <DownloadButton t={t} />
@@ -423,6 +424,7 @@ const UserProfileArea = () => {
                                             ) : (
                                                 <Link
                                                     href={`/course-learning?id=${course.id}`}
+                                                    className="course-card-btn"
                                                     style={{
                                                         padding: '10px 24px',
                                                         background: '#004736',

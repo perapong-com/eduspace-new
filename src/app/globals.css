@@ -1117,3 +1117,489 @@ label[for] {
     order: 1 !important;
   }
 }
+
+/* ========================================
+   Responsive Logo Sizing
+   ======================================== */
+
+/* Tablet (<1200px) */
+@media (max-width: 1199px) {
+  .header-logo .header-logo-img {
+    height: 45px !important;
+    width: auto !important;
+  }
+
+  .header-logo .header-logo-text {
+    font-size: 16px !important;
+  }
+}
+
+/* Mobile (<768px) */
+@media (max-width: 768px) {
+  .header-logo .header-logo-img {
+    height: 38px !important;
+    margin-right: 8px !important;
+  }
+
+  .header-logo .header-logo-text {
+    font-size: 14px !important;
+  }
+}
+
+/* Small Mobile (<576px) */
+@media (max-width: 576px) {
+  .header-logo .header-logo-img {
+    height: 32px !important;
+    margin-right: 6px !important;
+  }
+
+  .header-logo .header-logo-text {
+    font-size: 12px !important;
+  }
+}
+
+/* ========================================
+   Hamburger Icon Styling (Match Cart Icon)
+   ======================================== */
+
+/* Hamburger button - same style as cart icon */
+@media (max-width: 1199px) {
+  .header__hamburger .sidebar__toggle {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    background: #f5f7fa !important;
+    border-radius: 8px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .header__hamburger .sidebar__toggle:hover {
+    background: #e8f5f0 !important;
+  }
+
+  .header__hamburger .sidebar__toggle i.fa-bars {
+    font-size: 14px !important;
+    color: #004736 !important;
+  }
+}
+
+/* ========================================
+   Profile Page Responsive Styling
+   ======================================== */
+
+/* Tablet & Mobile (<992px) */
+@media (max-width: 991px) {
+
+  /* Main section padding */
+  .profile-section {
+    padding: 24px 0 !important;
+  }
+
+  /* Profile Header Card */
+  .profile-section .row.mb-5>.col-12>div {
+    padding: 24px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Profile Header Row - Stack on mobile */
+  .profile-section .row.align-items-center {
+    flex-direction: column !important;
+  }
+
+  .profile-section .row.align-items-center>.col-md-8,
+  .profile-section .row.align-items-center>.col-md-4 {
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+  }
+
+  /* Avatar and info - center on mobile */
+  .profile-section .d-flex.align-items-center.gap-4 {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 16px !important;
+  }
+
+  /* CPE section center */
+  .profile-section .col-md-4.text-md-end {
+    text-align: center !important;
+    margin-top: 24px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* Stats Cards - 2 columns on tablet */
+  .profile-section .row.g-4>.col-lg-3 {
+    flex: 0 0 50% !important;
+    max-width: 50% !important;
+  }
+
+  /* Course section header */
+  .profile-section .d-flex.justify-content-between.align-items-center.mb-4 {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 16px !important;
+  }
+
+  .profile-section .d-flex.justify-content-between .theme-btn {
+    width: 100% !important;
+    text-align: center !important;
+    display: block !important;
+  }
+}
+
+/* Mobile (<768px) */
+@media (max-width: 768px) {
+  .profile-section {
+    padding: 16px 0 !important;
+  }
+
+  /* Profile Header */
+  .profile-section .row.mb-5>.col-12>div {
+    padding: 20px 16px !important;
+  }
+
+  /* Avatar smaller */
+  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
+    width: 80px !important;
+    height: 80px !important;
+  }
+
+  /* Name smaller */
+  .profile-section h2 {
+    font-size: 22px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* CPE number smaller */
+  .profile-section .col-md-4>div:first-child {
+    font-size: 36px !important;
+  }
+
+  /* Reduce section spacing */
+  .profile-section .row.mb-5 {
+    margin-bottom: 24px !important;
+  }
+
+  .profile-section .row.g-4.mb-5 {
+    margin-bottom: 24px !important;
+  }
+
+  /* Course card section */
+  .profile-section .row>.col-12>div {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  /* Section title */
+  .profile-section h4 {
+    font-size: 18px !important;
+  }
+}
+
+/* Small Mobile (<576px) */
+@media (max-width: 576px) {
+  .profile-section {
+    padding: 12px 0 !important;
+  }
+
+  /* Profile Header even smaller padding */
+  .profile-section .row.mb-5>.col-12>div {
+    padding: 16px 12px !important;
+  }
+
+  /* Avatar even smaller */
+  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  /* Name smaller */
+  .profile-section h2 {
+    font-size: 20px !important;
+  }
+
+  /* CPE number */
+  .profile-section .col-md-4>div:first-child {
+    font-size: 32px !important;
+  }
+
+  /* Stats Cards - single column on small mobile */
+  .profile-section .row.g-4>.col-lg-3,
+  .profile-section .row.g-4>.col-md-6 {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Stats card compact */
+  .profile-section .row.g-4>div>div {
+    padding: 14px !important;
+  }
+
+  /* Stats card icon smaller */
+  .profile-section .row.g-4 .d-flex.align-items-center.gap-3>div:first-child {
+    width: 42px !important;
+    height: 42px !important;
+  }
+
+  .profile-section .row.g-4 .d-flex.align-items-center.gap-3 i {
+    font-size: 16px !important;
+  }
+
+  /* Stats card text smaller */
+  .profile-section .row.g-4 h3 {
+    font-size: 20px !important;
+  }
+
+  .profile-section .row.g-4 p {
+    font-size: 12px !important;
+  }
+
+  /* Course card section */
+  .profile-section .row>.col-12>div {
+    padding: 12px !important;
+  }
+
+  /* Section title smaller */
+  .profile-section h4 {
+    font-size: 16px !important;
+  }
+
+  /* Course cards margin */
+  .profile-section .row.mb-5 {
+    margin-bottom: 16px !important;
+  }
+}
+
+/* ========================================
+   Profile Card Mobile Optimizations
+   ======================================== */
+
+@media (max-width: 640px) {
+
+  /* Profile Header Card - Better padding */
+  .profile-section .row.mb-5>.col-12>div {
+    position: relative !important;
+    padding: 20px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Avatar - Larger and more prominent */
+  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
+    width: 80px !important;
+    height: 80px !important;
+    font-size: 32px !important;
+    border-radius: 16px !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* Profile Info Container - Center everything */
+  .profile-section .d-flex.align-items-center.gap-4 {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 12px !important;
+    padding-top: 30px !important;
+  }
+
+  /* Edit Button - Better size and position */
+  .profile-section .d-flex.align-items-center.gap-4>div:last-child>div:first-child>button {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+    min-height: 40px !important;
+  }
+
+  /* Name and Edit Container - Stack */
+  .profile-section .d-flex.align-items-center.gap-4>div:last-child>div:first-child {
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 12px !important;
+  }
+
+  /* Name - Larger and centered */
+  .profile-section .d-flex.align-items-center.gap-4 h2 {
+    font-size: 22px !important;
+    text-align: center !important;
+    width: 100% !important;
+    margin-bottom: 4px !important;
+  }
+
+  /* Email - Clear and readable */
+  .profile-section .d-flex.align-items-center.gap-4 p {
+    font-size: 14px !important;
+    padding: 6px 0 !important;
+    line-height: 1.5 !important;
+    opacity: 0.9 !important;
+  }
+
+  /* Pharmacist Badge - Prominent */
+  .profile-section .d-flex.align-items-center.gap-4 span[style*="borderRadius"] {
+    margin-top: 8px !important;
+    margin-bottom: 0 !important;
+    padding: 10px 20px !important;
+    font-size: 14px !important;
+    border-radius: 24px !important;
+  }
+
+  /* CPE Section Container */
+  .profile-section .col-md-4.text-md-end {
+    margin-top: 24px !important;
+    padding-top: 20px !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+    text-align: center !important;
+  }
+
+  /* CPE Number - Large and bold */
+  .profile-section .col-md-4>div:first-child {
+    font-size: 48px !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* CPE Label */
+  .profile-section .col-md-4>div:first-child span {
+    font-size: 18px !important;
+    margin-left: 6px !important;
+    font-weight: 400 !important;
+  }
+
+  /* Accumulated Credits text */
+  .profile-section .col-md-4>p {
+    font-size: 13px !important;
+    opacity: 0.85 !important;
+  }
+}
+
+/* ========================================
+   Course List Mobile Optimizations
+   ======================================== */
+
+@media (max-width: 640px) {
+
+  /* Course Cards List - More gap */
+  .course-cards-list {
+    gap: 16px !important;
+  }
+
+  /* Course Card - Vertical Stack Layout */
+  .course-card {
+    flex-direction: column !important;
+    padding: 16px !important;
+    gap: 14px !important;
+    align-items: stretch !important;
+  }
+
+  /* Course Icon - Smaller and inline with title */
+  .course-card-icon {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 10px !important;
+    position: absolute !important;
+    top: 16px !important;
+    left: 16px !important;
+  }
+
+  .course-card-icon i {
+    font-size: 20px !important;
+  }
+
+  /* Course Info - Full width with padding for icon */
+  .course-card-info {
+    padding-left: 60px !important;
+    width: 100% !important;
+    min-height: 50px !important;
+  }
+
+  /* Course Header - Column layout */
+  .course-card-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  /* Course Title - Larger and readable */
+  .course-card-title {
+    font-size: 15px !important;
+    line-height: 1.4 !important;
+    font-weight: 600 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Status Badge - Inline below title */
+  .course-card-badge {
+    font-size: 11px !important;
+    padding: 4px 12px !important;
+    border-radius: 16px !important;
+  }
+
+  /* Meta Info - Stack vertically */
+  .course-card-meta {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 4px !important;
+    font-size: 13px !important;
+    margin-bottom: 12px !important;
+    line-height: 1.5 !important;
+  }
+
+  .course-card-meta span[style*="margin: 0 10px"] {
+    display: none !important;
+  }
+
+  /* Progress Bar - Full width below */
+  .course-card-progress {
+    margin-bottom: 0 !important;
+    padding-left: 0 !important;
+  }
+
+  /* Action Buttons - Full width at bottom */
+  .course-card-actions {
+    width: 100% !important;
+    padding-top: 12px !important;
+    border-top: 1px solid #f0f0f0 !important;
+    margin-top: 4px !important;
+  }
+
+  /* Continue Button - Full width */
+  .course-card-btn {
+    width: 100% !important;
+    padding: 14px 24px !important;
+    text-align: center !important;
+    font-size: 15px !important;
+    border-radius: 10px !important;
+    display: block !important;
+  }
+
+  /* Download Button - Full width */
+  .course-card-actions button {
+    width: 100% !important;
+    height: 48px !important;
+    padding: 0 20px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ========================================
+   OffCanvas Menu - Hide Scrollbar
+   ======================================== */
+
+.offcanvas-menu {
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.offcanvas-menu::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari, Opera */
+}
