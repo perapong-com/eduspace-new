@@ -2,9 +2,7 @@
 
 /* Global Font - Thai Sarabun (Google Fonts version) */
 /* Exclude icon fonts (Font Awesome, etc.) from font override */
-*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not(
-    [class*="far"]
-  ):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
+*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not([class*="far"]):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
   font-family: "Sarabun", "TH Sarabun New", sans-serif !important;
 }
 
@@ -102,7 +100,7 @@ html.lang-en i[class*="fab"] {
    ======================================== */
 
 /* Header - increase all text by 2px */
-header, 
+header,
 .header-section,
 .header-section-2,
 .header-unified,
@@ -201,10 +199,10 @@ i.fa,
 }
 
 /* Checkbox and Radio labels */
-input[type="checkbox"] + label,
-input[type="checkbox"] + span,
-input[type="radio"] + label,
-input[type="radio"] + span,
+input[type="checkbox"]+label,
+input[type="checkbox"]+span,
+input[type="radio"]+label,
+input[type="radio"]+span,
 .form-check-label,
 .checkbox label,
 .radio label,
@@ -847,7 +845,7 @@ label[for] {
   .filter-toggle-btn {
     display: none !important;
   }
-  
+
   .filter-content {
     max-height: none !important;
     opacity: 1 !important;
@@ -918,6 +916,9 @@ label[for] {
 /* ========================================
    Checkout Page Responsive Styles
    ======================================== */
+
+/* Tablet (≤992px) - Reorder checkout sections */
+@media (max-width: 992px) {
 
   /* Header adjustments for mobile */
   .header-2 .container {
