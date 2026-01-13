@@ -16,10 +16,22 @@ const OffCanvas = ({ setOpenCanvas, openCanvas }: any) => {
     const { user, isAuthenticated, logout } = useAuth();
     const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
 
+    // Hide body scrollbar when offcanvas is open
+    React.useEffect(() => {
+        if (openCanvas) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [openCanvas]);
+
     const menuItems: MenuItem[] = [
         { label: t('หน้าแรก', 'Home'), href: '/' },
         { label: t('คอร์สเรียน', 'Courses'), href: '/courses-grid' },
-        { label: t('เกี่ยวกับเรา', 'About Us'), href: '/about_us' }, 
+        { label: t('เกี่ยวกับเรา', 'About Us'), href: '/about_us' },
     ];
 
     const handleLogout = () => {
@@ -31,6 +43,7 @@ const OffCanvas = ({ setOpenCanvas, openCanvas }: any) => {
         <>
             {/* Full Screen Mobile Menu */}
             <div
+                className="offcanvas-menu"
                 style={{
                     position: 'fixed',
                     top: 0,
@@ -42,7 +55,7 @@ const OffCanvas = ({ setOpenCanvas, openCanvas }: any) => {
                     display: openCanvas ? 'flex' : 'none',
                     flexDirection: 'column',
                     padding: '16px',
-                    overflowY: 'auto',
+                    overflow: 'hidden',
                 }}
             >
                 {/* Header - Logo and Hamburger */}
