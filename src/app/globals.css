@@ -2,7 +2,9 @@
 
 /* Global Font - Thai Sarabun (Google Fonts version) */
 /* Exclude icon fonts (Font Awesome, etc.) from font override */
-*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not([class*="far"]):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
+*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not(
+    [class*="far"]
+  ):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
   font-family: "Sarabun", "TH Sarabun New", sans-serif !important;
 }
 
@@ -199,10 +201,10 @@ i.fa,
 }
 
 /* Checkbox and Radio labels */
-input[type="checkbox"]+label,
-input[type="checkbox"]+span,
-input[type="radio"]+label,
-input[type="radio"]+span,
+input[type="checkbox"] + label,
+input[type="checkbox"] + span,
+input[type="radio"] + label,
+input[type="radio"] + span,
 .form-check-label,
 .checkbox label,
 .radio label,
@@ -241,12 +243,12 @@ label[for] {
     align-items: center !important;
   }
 
-  .hero-section.hero-2 .row>.col-12:first-child {
+  .hero-section.hero-2 .row > .col-12:first-child {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
 
-  .hero-section.hero-2 .row>.col-12:last-child {
+  .hero-section.hero-2 .row > .col-12:last-child {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -437,7 +439,7 @@ label[for] {
 
 .hero-2 .hero-image-items .hero-image .counter-box h2 {
   font-size: 42px !important;
-  color: #014D40 !important;
+  color: #014d40 !important;
   margin: 8px 0 !important;
   font-weight: 700 !important;
   line-height: 1 !important;
@@ -597,7 +599,7 @@ label[for] {
   flex-wrap: wrap !important;
 }
 
-.top-category-wrapper-2 .row.g-0>[class*="col-"] {
+.top-category-wrapper-2 .row.g-0 > [class*="col-"] {
   flex: 0 0 25% !important;
   max-width: 25% !important;
 }
@@ -619,7 +621,7 @@ label[for] {
 .top-category-wrapper-2 .top-category-box .icon {
   flex-shrink: 0 !important;
   margin-bottom: 20px !important;
-  color: #014D40 !important;
+  color: #014d40 !important;
 }
 
 .top-category-wrapper-2 .top-category-box .icon img,
@@ -661,7 +663,7 @@ label[for] {
 }
 
 .top-category-wrapper-2 .top-category-box:hover {
-  background: #014D40 !important;
+  background: #014d40 !important;
   transform: scale(1.02) !important;
   box-shadow: 0 8px 25px rgba(1, 77, 64, 0.3) !important;
   z-index: 10 !important;
@@ -732,7 +734,7 @@ label[for] {
   }
 
   /* 4 columns grid on tablet */
-  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
+  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
     flex: 0 0 25% !important;
     max-width: 25% !important;
   }
@@ -757,19 +759,17 @@ label[for] {
   .top-category-box .content p {
     font-size: 14px !important;
   }
-
 }
 
 /* Tablet & iPad Pro (≤1024px) - 4 columns grid */
 @media (max-width: 1024px) {
-
   .top-category-wrapper-2 {
     background: #fff !important;
     border-radius: 12px !important;
   }
 
   /* Keep 4 columns on iPad */
-  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
+  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
     flex: 0 0 25% !important;
     max-width: 25% !important;
   }
@@ -840,7 +840,20 @@ label[for] {
   transition: max-height 0.4s ease-in, opacity 0.3s ease;
 }
 
-/* PC: Hide toggle button and always show filter content */
+/* iPad Pro & Nest Hub (1024px+): Hide toggle button and always show filter content */
+@media (min-width: 1024px) {
+  .filter-toggle-btn {
+    display: none !important;
+  }
+
+  .filter-content {
+    max-height: none !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+  }
+}
+
+/* PC (larger screens): Same behavior */
 @media (min-width: 1025px) {
   .filter-toggle-btn {
     display: none !important;
@@ -851,6 +864,91 @@ label[for] {
     opacity: 1 !important;
     overflow: visible !important;
   }
+
+/* ========================================
+   Courses Grid - Card Spacing
+   ======================================== */
+
+/* Add margin between course cards */
+.courses-card-main-items {
+  margin-bottom: 40px !important;
+}
+
+/* Tablet (≤1024px) */
+@media (max-width: 1024px) {
+  .courses-card-main-items {
+    margin-bottom: 60px !important;
+  }
+}
+
+/* Mobile (≤768px) */
+@media (max-width: 768px) {
+  .courses-card-main-items {
+    margin-bottom: 70px !important;
+  }
+}
+
+/* Small Mobile (≤576px) */
+@media (max-width: 576px) {
+  .courses-card-main-items {
+    margin-bottom: 50px !important;
+  }
+}
+
+/* Limit course card modal size - Tablet only */
+@media (max-width: 1024px) {
+  .courses-card-main-items .courses-card-items {
+    max-height: 340px !important;
+    overflow: hidden !important;
+  }
+}
+
+/* Limit course card modal size - Mobile */
+@media (max-width: 768px) {
+  .courses-card-main-items .courses-card-items {
+    max-height: 320px !important;
+  }
+}
+
+/* Limit course card modal size - Small Mobile */
+@media (max-width: 576px) {
+  .courses-card-main-items .courses-card-items {
+    max-height: 300px !important;
+  }
+}
+
+/* Reduce height of hover modal (green card) */
+.courses-card-main-items .courses-card-items-hover {
+  max-height: 350px !important;
+  overflow: hidden !important;
+}
+
+/* Modal title styling - 16px bold */
+.courses-card-main-items .courses-card-items-hover h5 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+/* Responsive hover modal size - Tablet */
+@media (max-width: 1024px) {
+  .courses-card-main-items .courses-card-items-hover {
+    max-height: 320px !important;
+  }
+}
+
+/* Responsive hover modal size - Mobile */
+@media (max-width: 768px) {
+  .courses-card-main-items .courses-card-items-hover {
+    max-height: 300px !important;
+  }
+}
+
+/* Responsive hover modal size - Small Mobile */
+@media (max-width: 576px) {
+  .courses-card-main-items .courses-card-items-hover {
+    max-height: 280px !important;
+  }
+}
 
   /* Cart icon smaller */
   .header-right a[href="/shop-cart"] {
@@ -869,7 +967,7 @@ label[for] {
   }
 
   /* Category section for tablet portrait */
-  .top-category-wrapper-2>.row>[class*="col-"] {
+  .top-category-wrapper-2 > .row > [class*="col-"] {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
@@ -878,7 +976,7 @@ label[for] {
     margin: 0 0 20px 0 !important;
   }
 
-  .top-category-left-items .row.g-0>.col-6 {
+  .top-category-left-items .row.g-0 > .col-6 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -919,7 +1017,6 @@ label[for] {
 
 /* Tablet (≤992px) - Reorder checkout sections */
 @media (max-width: 992px) {
-
   /* Header adjustments for mobile */
   .header-2 .container {
     padding: 0 15px;
@@ -939,7 +1036,6 @@ label[for] {
 
 /* Mobile (≤768px) */
 @media (max-width: 768px) {
-
   /* Checkout section padding */
   .checkout-section {
     padding: 20px 0 !important;
@@ -968,7 +1064,7 @@ label[for] {
   }
 
   /* Keep text left, logo right in payment methods */
-  .payment-methods label>div:last-of-type {
+  .payment-methods label > div:last-of-type {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -976,15 +1072,15 @@ label[for] {
     flex: 1 !important;
   }
 
-  .payment-methods label>div:last-of-type p {
+  .payment-methods label > div:last-of-type p {
     margin: 0 !important;
   }
 
-  .payment-methods label>div:last-of-type img {
+  .payment-methods label > div:last-of-type img {
     margin-top: 0 !important;
   }
 
-  .payment-methods label>div:last-of-type>div:last-child {
+  .payment-methods label > div:last-of-type > div:last-child {
     margin-top: 0 !important;
   }
 
@@ -1003,7 +1099,7 @@ label[for] {
     font-size: 20px !important;
   }
 
-  .receipt-type-section .d-flex.gap-2.mb-2>div {
+  .receipt-type-section .d-flex.gap-2.mb-2 > div {
     width: 100% !important;
     flex: none !important;
   }
@@ -1014,7 +1110,7 @@ label[for] {
   }
 
   /* 2 columns on mobile */
-  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
+  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -1048,7 +1144,6 @@ label[for] {
 
 /* Small Mobile (≤576px) */
 @media (max-width: 576px) {
-
   .category-bottom-title .theme-btn {
     width: 100% !important;
     max-width: 280px !important;
@@ -1089,7 +1184,6 @@ label[for] {
 
 /* Tablet (≤992px) */
 @media (max-width: 992px) {
-
   /* Footer mobile */
   .footer-section,
   .footer-area {
@@ -1192,14 +1286,13 @@ label[for] {
 
 /* Tablet & Mobile (<992px) */
 @media (max-width: 991px) {
-
   /* Main section padding */
   .profile-section {
     padding: 24px 0 !important;
   }
 
   /* Profile Header Card */
-  .profile-section .row.mb-5>.col-12>div {
+  .profile-section .row.mb-5 > .col-12 > div {
     padding: 24px !important;
     border-radius: 16px !important;
   }
@@ -1209,8 +1302,8 @@ label[for] {
     flex-direction: column !important;
   }
 
-  .profile-section .row.align-items-center>.col-md-8,
-  .profile-section .row.align-items-center>.col-md-4 {
+  .profile-section .row.align-items-center > .col-md-8,
+  .profile-section .row.align-items-center > .col-md-4 {
     width: 100% !important;
     max-width: 100% !important;
     flex: 0 0 100% !important;
@@ -1232,7 +1325,7 @@ label[for] {
   }
 
   /* Stats Cards - 2 columns on tablet */
-  .profile-section .row.g-4>.col-lg-3 {
+  .profile-section .row.g-4 > .col-lg-3 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -1258,12 +1351,12 @@ label[for] {
   }
 
   /* Profile Header */
-  .profile-section .row.mb-5>.col-12>div {
+  .profile-section .row.mb-5 > .col-12 > div {
     padding: 20px 16px !important;
   }
 
   /* Avatar smaller */
-  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
+  .profile-section .d-flex.align-items-center.gap-4 > div:first-child {
     width: 80px !important;
     height: 80px !important;
   }
@@ -1275,7 +1368,7 @@ label[for] {
   }
 
   /* CPE number smaller */
-  .profile-section .col-md-4>div:first-child {
+  .profile-section .col-md-4 > div:first-child {
     font-size: 36px !important;
   }
 
@@ -1289,7 +1382,7 @@ label[for] {
   }
 
   /* Course card section */
-  .profile-section .row>.col-12>div {
+  .profile-section .row > .col-12 > div {
     padding: 16px !important;
     border-radius: 12px !important;
   }
@@ -1307,12 +1400,12 @@ label[for] {
   }
 
   /* Profile Header even smaller padding */
-  .profile-section .row.mb-5>.col-12>div {
+  .profile-section .row.mb-5 > .col-12 > div {
     padding: 16px 12px !important;
   }
 
   /* Avatar even smaller */
-  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
+  .profile-section .d-flex.align-items-center.gap-4 > div:first-child {
     width: 70px !important;
     height: 70px !important;
   }
@@ -1323,24 +1416,24 @@ label[for] {
   }
 
   /* CPE number */
-  .profile-section .col-md-4>div:first-child {
+  .profile-section .col-md-4 > div:first-child {
     font-size: 32px !important;
   }
 
   /* Stats Cards - single column on small mobile */
-  .profile-section .row.g-4>.col-lg-3,
-  .profile-section .row.g-4>.col-md-6 {
+  .profile-section .row.g-4 > .col-lg-3,
+  .profile-section .row.g-4 > .col-md-6 {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
 
   /* Stats card compact */
-  .profile-section .row.g-4>div>div {
+  .profile-section .row.g-4 > div > div {
     padding: 14px !important;
   }
 
   /* Stats card icon smaller */
-  .profile-section .row.g-4 .d-flex.align-items-center.gap-3>div:first-child {
+  .profile-section .row.g-4 .d-flex.align-items-center.gap-3 > div:first-child {
     width: 42px !important;
     height: 42px !important;
   }
@@ -1359,7 +1452,7 @@ label[for] {
   }
 
   /* Course card section */
-  .profile-section .row>.col-12>div {
+  .profile-section .row > .col-12 > div {
     padding: 12px !important;
   }
 
@@ -1647,7 +1740,6 @@ label[for] {
    ======================================== */
 
 @media (max-width: 640px) {
-
   /* Course Cards List - More gap */
   .course-cards-list {
     gap: 16px !important;
