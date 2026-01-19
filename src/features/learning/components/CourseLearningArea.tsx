@@ -636,15 +636,13 @@ const CourseLearningArea = () => {
                                     </div>
                                 </div>
 
-                                {/* Lesson Info & Tabs */}
-                                <div className="row g-4">
-                                    <div className="col-lg-8">
-                                        {/* Lesson Title */}
+                                {/* Lesson Info & Tabs - Restructured for mobile order */}
+                                <div className="lesson-content-row">
+                                    {/* 1. Lesson Title - แสดงก่อน */}
+                                    <div className="lesson-title-section">
                                         <div style={{
                                             background: '#fff',
                                             borderRadius: '16px',
-                                            padding: '24px',
-                                            marginBottom: '20px',
                                             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.06)',
                                         }}>
                                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
@@ -680,8 +678,97 @@ const CourseLearningArea = () => {
                                                 {currentLessonData?.description}
                                             </p>
                                         </div>
+                                    </div>
 
-                                        {/* Interactive Tabs */}
+                                    {/* 2. Mobile Lessons List - แสดงเฉพาะบน mobile หลัง Lesson Title */}
+                                    <div className="mobile-lessons-section">
+                                        <h6 style={{ color: '#014D40', marginBottom: '16px', fontWeight: '600' }}>
+                                            <i className="fas fa-list-ul" style={{ marginRight: '8px' }}></i>
+                                            {t('เนื้อหาการเรียน', 'Course Content')}
+                                        </h6>
+                                        <div>
+                                            {lessons.map((lesson, index) => (
+                                                <div
+                                                    key={lesson.id}
+                                                    onClick={() => { setCurrentLesson(lesson.id); }}
+                                                    style={{
+                                                        padding: '14px 16px',
+                                                        borderRadius: '12px',
+                                                        marginBottom: '8px',
+                                                        cursor: 'pointer',
+                                                        background: currentLesson === lesson.id
+                                                            ? 'linear-gradient(135deg, #014D40 0%, #006B5A 100%)'
+                                                            : lesson.completed ? '#e8f8f4' : '#f9fafb',
+                                                        color: currentLesson === lesson.id ? '#fff' : '#333',
+                                                        border: currentLesson === lesson.id ? 'none' : '1px solid #e5e7eb',
+                                                        transition: 'all 0.3s ease',
+                                                        boxShadow: currentLesson === lesson.id ? '0 4px 12px rgba(1, 77, 64, 0.2)' : 'none',
+                                                    }}
+                                                >
+                                                    <div className="d-flex align-items-center gap-3">
+                                                        <div style={{
+                                                            width: '32px',
+                                                            height: '32px',
+                                                            borderRadius: '50%',
+                                                            background: lesson.completed
+                                                                ? '#22c55e'
+                                                                : currentLesson === lesson.id
+                                                                    ? 'rgba(255,255,255,0.2)'
+                                                                    : '#e5e7eb',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            flexShrink: 0,
+                                                        }}>
+                                                            {lesson.completed ? (
+                                                                <i className="fas fa-check" style={{ fontSize: '12px', color: '#fff' }}></i>
+                                                            ) : lesson.isQuiz ? (
+                                                                <i className="fas fa-question" style={{ fontSize: '12px', color: currentLesson === lesson.id ? '#fff' : '#666' }}></i>
+                                                            ) : (
+                                                                <span style={{
+                                                                    fontSize: '12px',
+                                                                    fontWeight: '600',
+                                                                    color: currentLesson === lesson.id ? '#fff' : '#666'
+                                                                }}>{index + 1}</span>
+                                                            )}
+                                                        </div>
+                                                        <div style={{ flex: 1 }}>
+                                                            <p style={{
+                                                                marginBottom: '2px',
+                                                                fontSize: '13px',
+                                                                fontWeight: '500',
+                                                                lineHeight: '1.3'
+                                                            }}>{lesson.title}</p>
+                                                            <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+                                                                <small style={{
+                                                                    opacity: currentLesson === lesson.id ? 0.8 : 0.6,
+                                                                    fontSize: '12px'
+                                                                }}>
+                                                                    <i className="fas fa-clock" style={{ marginRight: '4px', fontSize: '10px' }}></i>
+                                                                    {lesson.duration}
+                                                                </small>
+                                                                {lesson.videoQuizzes && lesson.videoQuizzes.length > 0 && (
+                                                                    <small style={{
+                                                                        background: currentLesson === lesson.id ? 'rgba(255,255,255,0.2)' : '#fef3c7',
+                                                                        color: currentLesson === lesson.id ? '#fff' : '#92400e',
+                                                                        padding: '2px 6px',
+                                                                        borderRadius: '4px',
+                                                                        fontSize: '10px',
+                                                                        fontWeight: '600'
+                                                                    }}>
+                                                                        🎯 {lesson.videoQuizzes.length} คำถาม
+                                                                    </small>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+
+                                    {/* 3. Documents Section - แสดงหลังเนื้อหาการเรียน */}
+                                    <div className="documents-section">
                                         <div style={{
                                             background: '#fff',
                                             borderRadius: '16px',
@@ -755,8 +842,8 @@ const CourseLearningArea = () => {
                                         </div>
                                     </div>
 
-                                    {/* Right Sidebar */}
-                                    <div className="col-lg-4">
+                                    {/* 3. Actions Section - แสดงล่างสุด */}
+                                    <div className="actions-section">
                                         <div style={{
                                             background: '#fff',
                                             borderRadius: '16px',
