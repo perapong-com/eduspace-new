@@ -2,9 +2,7 @@
 
 /* Global Font - Thai Sarabun (Google Fonts version) */
 /* Exclude icon fonts (Font Awesome, etc.) from font override */
-*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not(
-    [class*="far"]
-  ):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
+*:not([class*="fa-"]):not([class*="fab"]):not([class*="fas"]):not([class*="far"]):not([class*="fal"]):not([class*="fad"]):not([class*="icon"]):not(i) {
   font-family: "Sarabun", "TH Sarabun New", sans-serif !important;
 }
 
@@ -201,10 +199,10 @@ i.fa,
 }
 
 /* Checkbox and Radio labels */
-input[type="checkbox"] + label,
-input[type="checkbox"] + span,
-input[type="radio"] + label,
-input[type="radio"] + span,
+input[type="checkbox"]+label,
+input[type="checkbox"]+span,
+input[type="radio"]+label,
+input[type="radio"]+span,
 .form-check-label,
 .checkbox label,
 .radio label,
@@ -243,12 +241,12 @@ label[for] {
     align-items: center !important;
   }
 
-  .hero-section.hero-2 .row > .col-12:first-child {
+  .hero-section.hero-2 .row>.col-12:first-child {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
 
-  .hero-section.hero-2 .row > .col-12:last-child {
+  .hero-section.hero-2 .row>.col-12:last-child {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -599,7 +597,7 @@ label[for] {
   flex-wrap: wrap !important;
 }
 
-.top-category-wrapper-2 .row.g-0 > [class*="col-"] {
+.top-category-wrapper-2 .row.g-0>[class*="col-"] {
   flex: 0 0 25% !important;
   max-width: 25% !important;
 }
@@ -734,7 +732,7 @@ label[for] {
   }
 
   /* 4 columns grid on tablet */
-  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
+  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
     flex: 0 0 25% !important;
     max-width: 25% !important;
   }
@@ -769,7 +767,7 @@ label[for] {
   }
 
   /* Keep 4 columns on iPad */
-  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
+  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
     flex: 0 0 25% !important;
     max-width: 25% !important;
   }
@@ -865,90 +863,90 @@ label[for] {
     overflow: visible !important;
   }
 
-/* ========================================
+  /* ========================================
    Courses Grid - Card Spacing
    ======================================== */
 
-/* Add margin between course cards */
-.courses-card-main-items {
-  margin-bottom: 40px !important;
-}
-
-/* Tablet (≤1024px) */
-@media (max-width: 1024px) {
+  /* Add margin between course cards */
   .courses-card-main-items {
-    margin-bottom: 60px !important;
+    margin-bottom: 40px !important;
   }
-}
 
-/* Mobile (≤768px) */
-@media (max-width: 768px) {
-  .courses-card-main-items {
-    margin-bottom: 70px !important;
+  /* Tablet (≤1024px) */
+  @media (max-width: 1024px) {
+    .courses-card-main-items {
+      margin-bottom: 60px !important;
+    }
   }
-}
 
-/* Small Mobile (≤576px) */
-@media (max-width: 576px) {
-  .courses-card-main-items {
-    margin-bottom: 50px !important;
+  /* Mobile (≤768px) */
+  @media (max-width: 768px) {
+    .courses-card-main-items {
+      margin-bottom: 70px !important;
+    }
   }
-}
 
-/* Limit course card modal size - Tablet only */
-@media (max-width: 1024px) {
-  .courses-card-main-items .courses-card-items {
-    max-height: 340px !important;
+  /* Small Mobile (≤576px) */
+  @media (max-width: 576px) {
+    .courses-card-main-items {
+      margin-bottom: 50px !important;
+    }
+  }
+
+  /* Limit course card modal size - Tablet only */
+  @media (max-width: 1024px) {
+    .courses-card-main-items .courses-card-items {
+      max-height: 340px !important;
+      overflow: hidden !important;
+    }
+  }
+
+  /* Limit course card modal size - Mobile */
+  @media (max-width: 768px) {
+    .courses-card-main-items .courses-card-items {
+      max-height: 320px !important;
+    }
+  }
+
+  /* Limit course card modal size - Small Mobile */
+  @media (max-width: 576px) {
+    .courses-card-main-items .courses-card-items {
+      max-height: 300px !important;
+    }
+  }
+
+  /* Reduce height of hover modal (green card) */
+  .courses-card-main-items .courses-card-items-hover {
+    max-height: 350px !important;
     overflow: hidden !important;
   }
-}
 
-/* Limit course card modal size - Mobile */
-@media (max-width: 768px) {
-  .courses-card-main-items .courses-card-items {
-    max-height: 320px !important;
+  /* Modal title styling - 16px bold */
+  .courses-card-main-items .courses-card-items-hover h5 {
+    font-size: 20px !important;
+    font-weight: 700 !important;
   }
-}
 
-/* Limit course card modal size - Small Mobile */
-@media (max-width: 576px) {
-  .courses-card-main-items .courses-card-items {
-    max-height: 300px !important;
+  /* Responsive hover modal size - Tablet */
+  @media (max-width: 1024px) {
+    .courses-card-main-items .courses-card-items-hover {
+      max-height: 320px !important;
+    }
   }
-}
 
-/* Reduce height of hover modal (green card) */
-.courses-card-main-items .courses-card-items-hover {
-  max-height: 350px !important;
-  overflow: hidden !important;
-}
-
-/* Modal title styling - 16px bold */
-.courses-card-main-items .courses-card-items-hover h5 {
-  font-size: 20px !important;
-  font-weight: 700 !important;
-}
-
-/* Responsive hover modal size - Tablet */
-@media (max-width: 1024px) {
-  .courses-card-main-items .courses-card-items-hover {
-    max-height: 320px !important;
+  /* Responsive hover modal size - Mobile */
+  @media (max-width: 768px) {
+    .courses-card-main-items .courses-card-items-hover {
+      max-height: 300px !important;
+    }
   }
-}
 
-/* Responsive hover modal size - Mobile */
-@media (max-width: 768px) {
-  .courses-card-main-items .courses-card-items-hover {
-    max-height: 300px !important;
+  /* Responsive hover modal size - Small Mobile */
+  @media (max-width: 576px) {
+    .courses-card-main-items .courses-card-items-hover {
+      max-height: 280px !important;
+    }
   }
-}
-
-/* Responsive hover modal size - Small Mobile */
-@media (max-width: 576px) {
-  .courses-card-main-items .courses-card-items-hover {
-    max-height: 280px !important;
-  }
-}
 
   /* Cart icon smaller */
   .header-right a[href="/shop-cart"] {
@@ -967,7 +965,7 @@ label[for] {
   }
 
   /* Category section for tablet portrait */
-  .top-category-wrapper-2 > .row > [class*="col-"] {
+  .top-category-wrapper-2>.row>[class*="col-"] {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
@@ -976,7 +974,7 @@ label[for] {
     margin: 0 0 20px 0 !important;
   }
 
-  .top-category-left-items .row.g-0 > .col-6 {
+  .top-category-left-items .row.g-0>.col-6 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -1017,6 +1015,7 @@ label[for] {
 
 /* Tablet (≤992px) - Reorder checkout sections */
 @media (max-width: 992px) {
+
   /* Header adjustments for mobile */
   .header-2 .container {
     padding: 0 15px;
@@ -1036,6 +1035,7 @@ label[for] {
 
 /* Mobile (≤768px) */
 @media (max-width: 768px) {
+
   /* Checkout section padding */
   .checkout-section {
     padding: 20px 0 !important;
@@ -1064,7 +1064,7 @@ label[for] {
   }
 
   /* Keep text left, logo right in payment methods */
-  .payment-methods label > div:last-of-type {
+  .payment-methods label>div:last-of-type {
     display: flex !important;
     flex-direction: row !important;
     align-items: center !important;
@@ -1072,15 +1072,15 @@ label[for] {
     flex: 1 !important;
   }
 
-  .payment-methods label > div:last-of-type p {
+  .payment-methods label>div:last-of-type p {
     margin: 0 !important;
   }
 
-  .payment-methods label > div:last-of-type img {
+  .payment-methods label>div:last-of-type img {
     margin-top: 0 !important;
   }
 
-  .payment-methods label > div:last-of-type > div:last-child {
+  .payment-methods label>div:last-of-type>div:last-child {
     margin-top: 0 !important;
   }
 
@@ -1099,7 +1099,7 @@ label[for] {
     font-size: 20px !important;
   }
 
-  .receipt-type-section .d-flex.gap-2.mb-2 > div {
+  .receipt-type-section .d-flex.gap-2.mb-2>div {
     width: 100% !important;
     flex: none !important;
   }
@@ -1110,7 +1110,7 @@ label[for] {
   }
 
   /* 2 columns on mobile */
-  .top-category-wrapper-2 .row.g-0 > [class*="col-"] {
+  .top-category-wrapper-2 .row.g-0>[class*="col-"] {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -1184,6 +1184,7 @@ label[for] {
 
 /* Tablet (≤992px) */
 @media (max-width: 992px) {
+
   /* Footer mobile */
   .footer-section,
   .footer-area {
@@ -1286,13 +1287,14 @@ label[for] {
 
 /* Tablet & Mobile (<992px) */
 @media (max-width: 991px) {
+
   /* Main section padding */
   .profile-section {
     padding: 24px 0 !important;
   }
 
   /* Profile Header Card */
-  .profile-section .row.mb-5 > .col-12 > div {
+  .profile-section .row.mb-5>.col-12>div {
     padding: 24px !important;
     border-radius: 16px !important;
   }
@@ -1302,8 +1304,8 @@ label[for] {
     flex-direction: column !important;
   }
 
-  .profile-section .row.align-items-center > .col-md-8,
-  .profile-section .row.align-items-center > .col-md-4 {
+  .profile-section .row.align-items-center>.col-md-8,
+  .profile-section .row.align-items-center>.col-md-4 {
     width: 100% !important;
     max-width: 100% !important;
     flex: 0 0 100% !important;
@@ -1325,7 +1327,7 @@ label[for] {
   }
 
   /* Stats Cards - 2 columns on tablet */
-  .profile-section .row.g-4 > .col-lg-3 {
+  .profile-section .row.g-4>.col-lg-3 {
     flex: 0 0 50% !important;
     max-width: 50% !important;
   }
@@ -1351,12 +1353,12 @@ label[for] {
   }
 
   /* Profile Header */
-  .profile-section .row.mb-5 > .col-12 > div {
+  .profile-section .row.mb-5>.col-12>div {
     padding: 20px 16px !important;
   }
 
   /* Avatar smaller */
-  .profile-section .d-flex.align-items-center.gap-4 > div:first-child {
+  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
     width: 80px !important;
     height: 80px !important;
   }
@@ -1368,7 +1370,7 @@ label[for] {
   }
 
   /* CPE number smaller */
-  .profile-section .col-md-4 > div:first-child {
+  .profile-section .col-md-4>div:first-child {
     font-size: 36px !important;
   }
 
@@ -1382,7 +1384,7 @@ label[for] {
   }
 
   /* Course card section */
-  .profile-section .row > .col-12 > div {
+  .profile-section .row>.col-12>div {
     padding: 16px !important;
     border-radius: 12px !important;
   }
@@ -1400,12 +1402,12 @@ label[for] {
   }
 
   /* Profile Header even smaller padding */
-  .profile-section .row.mb-5 > .col-12 > div {
+  .profile-section .row.mb-5>.col-12>div {
     padding: 16px 12px !important;
   }
 
   /* Avatar even smaller */
-  .profile-section .d-flex.align-items-center.gap-4 > div:first-child {
+  .profile-section .d-flex.align-items-center.gap-4>div:first-child {
     width: 70px !important;
     height: 70px !important;
   }
@@ -1416,24 +1418,24 @@ label[for] {
   }
 
   /* CPE number */
-  .profile-section .col-md-4 > div:first-child {
+  .profile-section .col-md-4>div:first-child {
     font-size: 32px !important;
   }
 
   /* Stats Cards - single column on small mobile */
-  .profile-section .row.g-4 > .col-lg-3,
-  .profile-section .row.g-4 > .col-md-6 {
+  .profile-section .row.g-4>.col-lg-3,
+  .profile-section .row.g-4>.col-md-6 {
     flex: 0 0 100% !important;
     max-width: 100% !important;
   }
 
   /* Stats card compact */
-  .profile-section .row.g-4 > div > div {
+  .profile-section .row.g-4>div>div {
     padding: 14px !important;
   }
 
   /* Stats card icon smaller */
-  .profile-section .row.g-4 .d-flex.align-items-center.gap-3 > div:first-child {
+  .profile-section .row.g-4 .d-flex.align-items-center.gap-3>div:first-child {
     width: 42px !important;
     height: 42px !important;
   }
@@ -1452,7 +1454,7 @@ label[for] {
   }
 
   /* Course card section */
-  .profile-section .row > .col-12 > div {
+  .profile-section .row>.col-12>div {
     padding: 12px !important;
   }
 
@@ -1740,6 +1742,7 @@ label[for] {
    ======================================== */
 
 @media (max-width: 640px) {
+
   /* Course Cards List - More gap */
   .course-cards-list {
     gap: 16px !important;
@@ -2640,5 +2643,763 @@ label[for] {
     font-size: 13px !important;
     padding: 12px !important;
     margin-top: 16px !important;
+  }
+}
+
+/* ========================================
+   Course Details - Tabs Responsive
+   ======================================== */
+
+/* Force tabs to single row on ALL screens */
+.courses-details-content>ul.nav,
+.courses-details-section .nav,
+.courses-details-content ul.nav {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  justify-content: center !important;
+  gap: 12px !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  border-bottom: none !important;
+  padding: 4px !important;
+  width: 100% !important;
+  margin-top: 40px !important;
+}
+
+.courses-details-content>ul.nav::-webkit-scrollbar,
+.courses-details-section .nav::-webkit-scrollbar {
+  display: none;
+}
+
+.courses-details-content>ul.nav .nav-item,
+.courses-details-section .nav .nav-item {
+  flex: 1 !important;
+  white-space: nowrap !important;
+  border: none !important;
+}
+
+.courses-details-content>ul.nav .nav-link,
+.courses-details-section .nav .nav-link {
+  text-align: center !important;
+  padding: 10px 16px !important;
+  font-size: 18px !important;
+  color: #333 !important;
+  border-radius: 8px !important;
+  border: none !important;
+  background: transparent !important;
+  transition: all 0.2s ease !important;
+  text-decoration: none !important;
+  width: 100% !important;
+  display: block !important;
+}
+
+.courses-details-content>ul.nav .nav-link::after,
+.courses-details-section .nav .nav-link::after {
+  display: none !important;
+}
+
+.courses-details-content>ul.nav .nav-link:hover,
+.courses-details-section .nav .nav-link:hover {
+  background: #f0f0f0 !important;
+}
+
+/* Active tab - button style */
+.courses-details-content>ul.nav .nav-link.active,
+.courses-details-section .nav .nav-link.active {
+  background: #004736 !important;
+  color: #fff !important;
+  font-weight: 600 !important;
+}
+
+/* Large Tablet (≤1024px) - iPad Pro landscape */
+@media (max-width: 1024px) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 10px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 10px 18px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* Tablet (≤992px) */
+@media (max-width: 992px) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 8px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 10px 16px !important;
+    font-size: 15px !important;
+  }
+}
+
+/* Tablet Portrait & Mobile Landscape (≤768px) */
+@media (max-width: 768px) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 8px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* Mobile (≤640px) */
+@media (max-width: 640px) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 6px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 8px 12px !important;
+    font-size: 14px !important;
+    border-radius: 6px !important;
+  }
+}
+
+/* Small Mobile (≤576px) */
+@media (max-width: 576px) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 4px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 8px 10px !important;
+    font-size: 13px !important;
+    border-radius: 6px !important;
+  }
+}
+
+/* Extra Small Mobile (≤400px) */
+@media (max-width: 400px) {
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+  }
+}
+
+/* Landscape orientation for mobile */
+@media (max-height: 500px) and (orientation: landscape) {
+
+  .courses-details-content>ul.nav,
+  .courses-details-section .nav {
+    gap: 10px !important;
+  }
+
+  .courses-details-content>ul.nav .nav-link,
+  .courses-details-section .nav .nav-link {
+    padding: 8px 16px !important;
+    font-size: 14px !important;
+  }
+}
+
+/* ========================================
+   Course Learning Page - Responsive
+   Clean Media Query Structure
+   ======================================== */
+
+/* 
+   MOBILE RESPONSIVE - เฉพาะ responsive ไม่แก้ไข web
+   Breakpoints:
+   - ≤1200px: Large Tablet/Small Desktop
+   - ≤992px:  Tablet Landscape
+   - ≤768px:  Tablet Portrait / Mobile Landscape
+   - ≤576px:  Mobile Portrait
+   - ≤400px:  Small Mobile
+*/
+
+/* ----------------------------------------
+   Large Tablet (≤1200px)
+   ---------------------------------------- */
+@media (max-width: 1200px) {
+  .course-learning-section .lesson-sidebar {
+    padding: 16px !important;
+  }
+
+  .course-learning-section .course-info {
+    padding: 16px !important;
+  }
+
+  .course-learning-section .col-lg-9 {
+    padding: 20px 24px !important;
+  }
+}
+
+/* ----------------------------------------
+   Course Learning - Desktop Layout (>992px)
+   ---------------------------------------- */
+
+/* Desktop: lesson-content-row เป็น 2 คอลัมน์ */
+.course-learning-section .lesson-content-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 16px 24px;
+  /* row-gap: 16px, column-gap: 24px */
+}
+
+/* Desktop: Lesson Title + Documents อยู่คอลัมน์ซ้าย */
+.course-learning-section .lesson-title-section,
+.course-learning-section .documents-section {
+  grid-column: 1;
+}
+
+/* Desktop: ลด margin-bottom และเพิ่ม padding ของ lesson-title-section */
+.course-learning-section .lesson-title-section>div {
+  margin-bottom: 0 !important;
+  padding: 24px !important;
+}
+
+/* Desktop: Actions อยู่คอลัมน์ขวา */
+.course-learning-section .actions-section {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+}
+
+/* ซ่อน mobile lessons section บน desktop */
+.course-learning-section .mobile-lessons-section {
+  display: none;
+}
+
+/* ----------------------------------------
+   Tablet & iPad Pro (≤1024px) - Stack Layout
+   ---------------------------------------- */
+@media (max-width: 1024px) {
+
+  /* Main row */
+  .course-learning-section .row.g-0 {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Main content (Video) - แสดงก่อน */
+  .course-learning-section .col-lg-9,
+  .course-learning-section .col-md-8 {
+    order: 1 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    padding: 16px !important;
+  }
+
+  /* ซ่อน Sidebar บน mobile (เพราะใช้ mobile-lessons-section แทน) */
+  .course-learning-section .col-lg-3,
+  .course-learning-section .col-md-4 {
+    display: none !important;
+  }
+
+  /* Video container */
+  .course-learning-section .video-container {
+    border-radius: 12px !important;
+  }
+
+  /* Lesson Content Row - จัดลำดับใหม่ */
+  .course-learning-section .lesson-content-row {
+    display: flex !important;
+    flex-direction: column !important;
+    padding: 0 !important;
+  }
+
+  /* 1. Lesson Title - แสดงก่อน */
+  .course-learning-section .lesson-title-section {
+    order: 1 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 2. Mobile Lessons List - แสดงหลัง Lesson Title */
+  .course-learning-section .mobile-lessons-section {
+    display: block !important;
+    order: 2 !important;
+    width: 100% !important;
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    margin-top: -16px !important;
+    margin-bottom: 8px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  }
+
+  /* ลด margin-bottom และปรับขนาดกรอบ lesson-title-section บน mobile */
+  .course-learning-section .lesson-title-section>div {
+    margin-bottom: 0 !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+    padding: 16px !important;
+    border-radius: 12px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* ให้ทั้งสองกรอบมีขนาดเท่ากัน */
+  .course-learning-section .lesson-title-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .course-learning-section .mobile-lessons-section {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* กรอบด้านในของ mobile-lessons-section ให้มี padding เท่ากับ lesson-title */
+  .course-learning-section .mobile-lessons-section>h6,
+  .course-learning-section .mobile-lessons-section>div {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  .course-learning-section .mobile-lessons-section>h6 {
+    padding-top: 16px !important;
+  }
+
+  .course-learning-section .mobile-lessons-section>div:last-child {
+    padding-bottom: 16px !important;
+  }
+
+  /* 3. Documents - แสดงหลังเนื้อหาการเรียน */
+  .course-learning-section .documents-section {
+    order: 3 !important;
+    width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* 4. Actions - แสดงล่างสุด */
+  .course-learning-section .actions-section {
+    order: 4 !important;
+    width: 100% !important;
+    margin-top: -8px !important;
+  }
+
+  /* Lesson Title Box - ปรับ font ให้พอดีกับกรอบ */
+  .course-learning-section .lesson-title-section>div {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .course-learning-section .lesson-title-section h4 {
+    font-size: 16px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .course-learning-section .lesson-title-section p {
+    font-size: 13px !important;
+    line-height: 1.5 !important;
+  }
+
+  /* Badges - ปรับขนาดให้พอดี */
+  .course-learning-section .lesson-title-section>div>div:first-child {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+
+  .course-learning-section .lesson-title-section>div>div:first-child>div:last-child {
+    flex-wrap: wrap !important;
+  }
+
+  .course-learning-section .lesson-title-section span {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  /* ========================================
+     ทุกกรอบมีขนาดเท่ากัน - Consistent Box Styling
+     ======================================== */
+
+  /* กรอบหลัก - ขนาดเท่ากันทุกกรอบ */
+  .course-learning-section .lesson-title-section>div:first-child,
+  .course-learning-section .documents-section>div:first-child,
+  .course-learning-section .actions-section>div:first-child {
+    background: #fff !important;
+    border-radius: 12px !important;
+    padding: 16px !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06) !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Mobile Lessons Section */
+  .course-learning-section .mobile-lessons-section h6 {
+    font-size: 14px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Lesson items ใน Mobile Lessons */
+  .course-learning-section .mobile-lessons-section>div>div {
+    padding: 12px !important;
+    border-radius: 10px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .course-learning-section .mobile-lessons-section p {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+  }
+
+  .course-learning-section .mobile-lessons-section small {
+    font-size: 10px !important;
+  }
+
+  /* Documents Section - แก้ไขการจัดเรียงข้อความ */
+  .course-learning-section .documents-section>div>div:first-child>div {
+    padding: 12px !important;
+    font-size: 13px !important;
+  }
+
+  .course-learning-section .documents-section [style*="padding: 24px"] {
+    padding: 12px !important;
+  }
+
+  /* Document Items - จัดข้อความให้เรียงกัน */
+  .course-learning-section .documents-section [style*="padding: 16px 20px"],
+  .course-learning-section .documents-section>div>div:last-child>div>div {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 12px !important;
+    padding: 12px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  /* Icon container */
+  .course-learning-section .documents-section [style*="width: 48px"] {
+    width: 40px !important;
+    height: 40px !important;
+    min-width: 40px !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Text container - ให้ข้อความอยู่ในบรรทัดเดียว */
+  .course-learning-section .documents-section [style*="flex: 1"] {
+    flex: 1 !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .course-learning-section .documents-section [style*="flex: 1"] p {
+    font-size: 12px !important;
+    line-height: 1.3 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  .course-learning-section .documents-section [style*="flex: 1"] small {
+    font-size: 10px !important;
+  }
+
+  /* Download button - แสดงแค่ไอคอน */
+  .course-learning-section .documents-section button {
+    padding: 10px !important;
+    font-size: 0 !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    min-width: 40px !important;
+    min-height: 40px !important;
+  }
+
+  .course-learning-section .documents-section button i {
+    font-size: 16px !important;
+    margin: 0 !important;
+  }
+
+  /* Actions Section */
+  .course-learning-section .actions-section h6 {
+    font-size: 14px !important;
+  }
+
+  .course-learning-section .actions-section button {
+    padding: 12px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+  }
+}
+
+/* ----------------------------------------
+   Tablet Portrait / Mobile Landscape (≤768px)
+   ---------------------------------------- */
+@media (max-width: 768px) {
+  .course-learning-section {
+    padding-bottom: 20px !important;
+  }
+
+  .course-learning-section .lesson-sidebar {
+    padding: 12px !important;
+  }
+
+  .course-learning-section .course-info {
+    padding: 14px !important;
+    border-radius: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .course-learning-section .course-info h6 {
+    font-size: 13px !important;
+  }
+
+  /* Lessons list - แสดงแบบ compact */
+  .course-learning-section .lesson-sidebar h6 {
+    font-size: 14px !important;
+    margin-bottom: 12px !important;
+  }
+
+  /* Lesson items */
+  .course-learning-section .lesson-sidebar>div:last-child>div {
+    padding: 12px !important;
+    margin-bottom: 6px !important;
+    border-radius: 10px !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div p {
+    font-size: 12px !important;
+  }
+
+  /* Main content area */
+  .course-learning-section .col-lg-9,
+  .course-learning-section .col-md-8 {
+    padding: 12px !important;
+  }
+
+  /* Video */
+  .course-learning-section .video-container {
+    border-radius: 10px !important;
+  }
+
+  /* Lesson title box */
+  .course-learning-section .video-wrapper>div>div {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
+  .course-learning-section .video-wrapper h4 {
+    font-size: 16px !important;
+  }
+
+  .course-learning-section .video-wrapper p {
+    font-size: 13px !important;
+  }
+
+  /* ลดระยะห่างระหว่างกรอบ */
+  .course-learning-section .lesson-title-section>div {
+    margin-bottom: 0 !important;
+  }
+
+  .course-learning-section .mobile-lessons-section {
+    margin-top: -16px !important;
+  }
+}
+
+/* ----------------------------------------
+   Mobile Portrait (≤576px)
+   ---------------------------------------- */
+@media (max-width: 576px) {
+  .course-learning-section .lesson-sidebar {
+    padding: 10px !important;
+  }
+
+  .course-learning-section .course-info {
+    padding: 12px !important;
+    border-radius: 8px !important;
+  }
+
+  .course-learning-section .course-info h6 {
+    font-size: 12px !important;
+  }
+
+  .course-learning-section .course-info>div:first-child>div:first-child {
+    width: 32px !important;
+    height: 32px !important;
+  }
+
+  .course-learning-section .course-info>div:first-child>div:first-child i {
+    font-size: 14px !important;
+  }
+
+  /* Lessons list title */
+  .course-learning-section .lesson-sidebar h6 {
+    font-size: 13px !important;
+  }
+
+  /* Lesson items */
+  .course-learning-section .lesson-sidebar>div:last-child>div {
+    padding: 10px 12px !important;
+    margin-bottom: 4px !important;
+    border-radius: 8px !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div>div>div:first-child {
+    width: 28px !important;
+    height: 28px !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div p {
+    font-size: 11px !important;
+    line-height: 1.2 !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div small {
+    font-size: 10px !important;
+  }
+
+  /* Main content area */
+  .course-learning-section .col-lg-9,
+  .course-learning-section .col-md-8 {
+    padding: 10px !important;
+  }
+
+  /* Video */
+  .course-learning-section .video-container {
+    border-radius: 8px !important;
+  }
+
+  /* Lesson title box */
+  .course-learning-section .video-wrapper>div>div {
+    padding: 12px !important;
+    border-radius: 10px !important;
+    margin-bottom: 12px !important;
+  }
+
+  .course-learning-section .video-wrapper h4 {
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+  }
+
+  .course-learning-section .video-wrapper p {
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+  }
+
+  /* Badges */
+  .course-learning-section .video-wrapper span {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+
+  /* Document items */
+  .course-learning-section [style*="padding: 16px 20px"] {
+    padding: 12px !important;
+    border-radius: 8px !important;
+  }
+
+  .course-learning-section [style*="width: 48px"] {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .course-learning-section [style*="width: 48px"] i {
+    font-size: 16px !important;
+  }
+
+  /* Action buttons */
+  .course-learning-section button {
+    padding: 10px !important;
+    font-size: 13px !important;
+    border-radius: 8px !important;
+  }
+
+  /* ลดระยะห่างระหว่างกรอบ */
+  .course-learning-section .lesson-title-section>div {
+    margin-bottom: 0 !important;
+  }
+
+  .course-learning-section .mobile-lessons-section {
+    margin-top: -16px !important;
+  }
+}
+
+/* ----------------------------------------
+   Small Mobile (≤400px)
+   ---------------------------------------- */
+@media (max-width: 400px) {
+  .course-learning-section .lesson-sidebar {
+    padding: 8px !important;
+  }
+
+  .course-learning-section .course-info {
+    padding: 10px !important;
+  }
+
+  .course-learning-section .course-info h6 {
+    font-size: 11px !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div {
+    padding: 8px 10px !important;
+  }
+
+  .course-learning-section .lesson-sidebar>div:last-child>div p {
+    font-size: 10px !important;
+  }
+
+  .course-learning-section .video-wrapper h4 {
+    font-size: 13px !important;
+  }
+
+  .course-learning-section .video-wrapper p {
+    font-size: 11px !important;
+  }
+
+  /* ลดระยะห่างระหว่างกรอบ */
+  .course-learning-section .lesson-title-section>div {
+    margin-bottom: 0 !important;
+  }
+
+  .course-learning-section .mobile-lessons-section {
+    margin-top: -16px !important;
+  }
+}
+
+/* ----------------------------------------
+   Landscape Orientation - Mobile
+   ---------------------------------------- */
+@media (max-height: 500px) and (orientation: landscape) {
+  .course-learning-section .lesson-sidebar {
+    padding: 12px !important;
+  }
+
+  .course-learning-section .course-info {
+    padding: 12px !important;
+  }
+
+  /* ลด height ของ lessons list */
+  .course-learning-section .lesson-sidebar>div:last-child {
+    max-height: 150px !important;
+    overflow-y: auto !important;
+  }
+
+  .course-learning-section .video-wrapper h4 {
+    font-size: 14px !important;
   }
 }
